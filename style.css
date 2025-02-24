@@ -1,0 +1,820 @@
+:root{
+    --main-bg-color : #F8E8EE;
+    --font-text-color : #756AB6; 
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* CSS Code for Font starts*/
+.corinthia-regular {
+    font-family: "Corinthia", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+  
+.corinthia-bold {
+  font-family: "Corinthia", serif;
+  font-weight: 700;
+  font-style: normal; /* Added this line for text color*/
+}
+
+/* .corinthia-bold {
+  color : var(--font-text-color);
+}
+.corinthia-dark {
+  color : var(--font-text-dark-color);
+} */
+
+.dancing-script-text {
+  font-family: "Dancing Script", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+.dancing-script-bold {
+  font-family: "Dancing Script", serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+/* CSS code for Font ends*/
+
+/*CSS code for login page starts*/
+#videoContainer>video{
+  position: absolute;
+  z-index: -1;
+}
+#divContainer {
+  position: relative;
+  padding-top: 20px;
+  width: 20%;
+  /* height: 60%; */
+  transform: translateY(50%);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed;
+  background-color: var(--main-bg-color);
+}
+ #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink, 
+#signemail, #signpassword, #signbutton #forgotemail, .showPassword, #forgotbutton {
+  text-align: center;
+  width: 75%;
+  margin: 15px;
+  /* padding: 30px; */
+}
+#signUpLink:hover, #forgotPasswordLink:hover {
+  border: 1px dotted;
+}
+#messageContainer {
+  width: 100px;
+  background-color: #756AB6;
+  color: white;
+  position: absolute;
+  right: 100px;
+}
+/* #email::placeholder, #password::placeholder {
+  text-align: center;
+} */
+
+/*CSS code for login page ends*/
+
+/* CSS code for header section*/
+#header {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--main-bg-color);
+  position: relative;
+}
+
+/* CSS code for logo container*/
+#logoContainer {
+  width:20%;
+  height: 100%;
+}
+#logoContainer > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* CSS code for search container*/
+#searchContainer {
+  width: 30%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+}
+#searchbar {
+  width: 85%;
+  height: 40px;
+  position: relative;
+  top : 30%;
+  border: 1px solid var(--font-text-color);
+  border-right: none;
+  border-top-left-radius: 50px;
+  border-bottom-left-radius: 50px;
+}
+#searchbar::placeholder {
+  /* transform: translate(10%); */
+  text-align: center;
+  font-family: "dancing-script-text", serif;
+  font-size: 1rem;
+  /* color : var(--font-text-color) */
+}
+#searchButton {
+  width: 15%;
+  height: 40px;
+  position: relative;
+  top : 30%;
+  border: 1px solid var(--font-text-color);
+  border-left: none;
+  background-color: white;
+  border-top-right-radius: 50px;
+  border-bottom-right-radius: 50px;
+}
+/* CSS code for NavLink container*/
+#navLinkCheckBox {
+  display: none;
+}
+#navLinksContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap : 20px;
+  right: 5%;
+}
+#navLinksContainer img {
+  display: block;
+  width: 50px;
+}
+#searchCheckBox, #searchCheckBoxLabel, #navLinkCheckBoxLabel {
+  display: none;
+}
+
+/* CSS code for body section*/
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* CSS code for category container*/
+#categoryContainer {
+  margin: 80px 0px;
+  width: 100%;
+  height: 50%;
+}
+#categoryTitle {
+  font-size: 2rem;
+  text-align: center;
+  color: var(--font-text-color);
+}
+#categoryCardContainer {
+  width: 100%;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.categoryCard {
+  min-width: 150px;
+  padding: 10px;
+}
+.categoryCard:hover {
+  border : 1px solid var(--font-text-color);
+}
+.categoryCard img {
+  display: block;
+  width: 100%;
+}
+.categoryTitleContainer {
+  margin: 10px 0px;
+  font-size: 1.5rem;
+  text-align: center;
+  /* color: var(--font-text-color); */
+}
+#categoryModal {
+  width: 80%;
+  height: 500px;
+  /* position: fixed; */
+  overflow: scroll;
+  border: 1px solid;
+  margin: auto;
+  /* z-index: 1; */
+  background-color: white;
+}
+#backButtonCategoryContainer {
+  width: 100%;
+  /* align-content: center; */
+}
+#backbuttonCategory {
+  margin: auto;
+  width: 100px;
+  border : none;
+  background-color: white;
+  font-size: 1 rem;
+  height: 50px;
+  /* padding: 10px; */
+}
+.strCategoryThumbContainer {
+  font-size: 1.5rem;
+  text-align: center;
+  padding: 20px;
+}
+.strCategoryRecipesText {
+  font-size: 1rem;
+  text-align: center;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#contentContainerRecipes {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+.strCategoryRecipes {
+  width: minmax(150px, auto, 100%);
+}
+.strCategoryRecipes div img {
+  display: block;
+  width: 100%;
+}
+
+/* CSS code for ingredients container*/
+#ingredientContainer {
+  width: 100%;
+  margin: 50px 0px;
+}
+#ingredientTitle {
+  font-size: 2rem;
+  text-align: center;
+  color : var(--font-text-color);
+}
+#ingredientTitleContainer {
+  width: 100%;
+  font-size: 1rem;
+  text-align: center;
+  padding: 20px;
+  /* color: var(--font-text-color); */
+}
+#ingredientCardContainer {
+  padding: 20px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap : 10px;
+}
+.ingredientCard {
+/* min-width: 150px; */
+width: clamp(150px, auto, 100%);
+padding: 10px;
+}
+#ingredientImgContainer{
+  width: 100%;
+}
+#ingredientImgContainer img {
+  display: block;
+  width: 100%;
+}
+
+/* CSS code for random recipe*/
+#randomContainer {
+  width: 100%;
+  margin: 50px 0px;
+}
+#randomTitle {
+  width: 100%;  
+  font-size: 2rem;
+  color: var(--font-text-color);
+  text-align: center;
+  padding: 10px 0px;
+}
+#randomRecipeName {
+  font-size: 1rem;
+  text-align: center;
+  padding: 20px;
+}
+#randomImgContainer {
+  width: 60%;
+  margin: auto;
+}
+#randomImgContainer>img {
+  display: block;
+  width: 100%;
+}
+
+/* CSS code for alphabet section*/
+#alphabetContainer {
+  width: 100%;
+  margin: 50px 0px;
+}
+#alphabetTitle {
+  width: 100%;
+  font-size: 2rem;
+  color: var(--font-text-color);
+  text-align: center;
+  padding: 10px 0px;
+}
+#alphabetCardContainer {
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap : 10px;
+}
+.alphabetCard {
+  text-align: center;
+  font-size: 1.5rem;
+  /* color: var(--font-text-color); */
+}
+#alphabetCardContainer div:hover {
+  border: 1px solid var(--font-text-color);
+}
+#alphabetModal {
+  width: 80%;
+  height: 500px;
+  /* position: fixed; */
+  overflow: scroll;
+  border: 1px solid;
+  margin: auto;
+  /* z-index: 1; */
+  background-color: white;
+}
+#backButtonCategoryContainer {
+  width: 100%;
+  background-color: var(--main-bg-color);
+  /* align-content: center; */
+}
+#backbuttonCategory {
+  margin: auto;
+  width: 100px;
+  border : none;
+  background-color: var(--main-bg-color);
+  font-size: 1 rem;
+  height: 50px;
+  /* padding: 10px; */
+}
+#contentContainerAlphabet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+#alphabetCard {
+  padding: 20px;
+  width: minmax(150px, auto, 100%);
+}
+#mealName{
+  font-size: 1rem;
+  text-align: center;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+#alphabetThumbContainer img {
+  display: block;
+  width: 100%;
+}
+
+/*CSS code for area container*/
+#areaContainer {
+  width: 100%;
+  margin: 50px 0px;
+}
+#areaTitle {
+  width: 100%;
+  font-size: 2rem;
+  color: var(--font-text-color);
+  text-align: center;
+  padding: 10px 0px;
+}
+#areaCardContainer {
+  padding: 20px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap : 20px;
+}
+.areaCard {
+  width: clamp(100px, 150px, 100%);
+  align-self: center;
+  justify-self: center;
+  padding: 10px;  
+}
+.areaCard:hover {
+  border: 1px dashed var(--font-text-color);
+}
+.areaCard img {
+  display: block;
+  width: 100%;
+  border: 1px solid black;
+}
+#areaModal {
+  width: 80%;
+  height: 500px;
+  /* position: fixed; */
+  overflow: scroll;
+  border: 1px solid;
+  margin: auto;
+  /* z-index: 1; */
+  background-color: white;
+}
+#contentContainerArea {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+#MealsCard {
+  width: minmax(150px, auto, 100%);
+  padding: 20px;
+}
+#mealName {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 20px;
+}
+#mealThumb {
+  padding: 20px;
+}
+#mealThumb img {
+  display: block;
+  width: 100%;
+}
+
+/* CSS code for RandomData page start*/
+#mainContainerRandom {
+  width: 100%;
+  /* height: 100%; */
+  /* display: grid;
+  grid-template: repeat(2, 1fr); */
+}
+#randomName {
+  /* grid-area : 1 / 1 / 3 / 2; */
+  text-align: center;
+  font-size: 2rem;
+  margin: 20px 0px;
+}
+#randomFlex {
+  width: 100%;
+  margin: 30px 0px;
+  /* height: 50%; */
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  /* gap : 10%; */
+}
+#randomThumb {
+  width: 35%;
+  padding: 10px;
+}
+#randomThumb img {
+  display: block;
+  width: 100%;
+}
+#randomDetails {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  padding: 10px;
+  font-size: 1rem;
+}
+#randomCategory, #randomArea {
+  padding: 10px;
+}
+table {
+  width: 80%;
+  margin: auto;
+  padding: 10px;
+}
+table th, table td {
+  text-align: center;
+  border: 1px dotted;
+}
+#randomInstructions {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  /* margin : 20px 0px; */
+  /* padding: 0px 20px; */
+  text-align: justify;
+  text-justify: inter-word;
+  line-height: 1.5rem;
+}
+#randomIFrame, #randomSource {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+}
+iframe {
+  width: 100%;
+}
+/* CSS code for RandomData page end*/
+
+/*CSS code for Cart page starts*/
+#cartSectionHeader {
+  font-size: 1.5rem;
+  text-align: center;
+  margin: 20px 0px;
+}
+#itemsTable {
+  width: 80%;
+  margin: auto;
+}
+#itemsTableHead {
+  font-size: 1.5rem;
+}
+/* .itemsTableRow {
+  height: 500px;
+}
+.itemsTableRow:first-child {
+  width: 55%;
+}
+.itemsTableRow:nth-child(2), .itemsTableRow:nth-child(3), .itemsTableRow:last-child {
+  width: 15%;
+} */
+.itemsTableRow img {
+  width: 100%;
+  display: block;
+}
+/*CSS code for Cart page ends*/
+
+/* CSS code for footer section*/
+#footer {
+  width: 99%;
+  height: 30%;
+  display: grid;
+  grid-template: repeat(2, 1fr);
+  /* "a b" 
+  "c c"; */
+  background-color : var(--main-bg-color);
+  text-align: center;
+}
+#aboutContainer {
+  grid-area : 1 / 1 / 2 / 2;
+
+}
+#contactContainer {
+  grid-area : 1 / 2 / 2 / 3;
+}
+#copyright {
+  grid-area : 2 / 1 / 3 / 3;
+}
+
+#footer div {
+  padding: 10px 50px;
+}
+
+
+/* Media Queries*/
+@media screen and (min-width : 768px ) and (max-width : 1024px) {
+
+  #logoContainer {
+    width: 35%;
+  }
+
+  #navLinksContainer {
+    position: relative;
+    right: 5%;
+  }
+
+  #navLinksContainer img {
+    display: block;
+    width: 40px;
+  }
+  
+  #copyright, #footer p {
+    height: 35%;
+    font-size: clamp(0.7rem, 0.75rem, 0.80rem);
+  }
+
+}
+
+@media screen and (width > 425px) and (max-width : 767px) {
+
+  #divContainer {
+    width: 60%;
+  }
+  #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink {
+    text-align: center;
+    width: 60%;
+    margin: 20px;
+    /* padding: 30px; */
+  }
+
+  #logoContainer {
+    width: 40%;
+  }
+
+  #navLinksContainer {
+    position: relative;
+    right: 2%;
+  }
+
+  #searchCheckBox, #searchCheckBoxLabel, #navLinkCheckBoxLabel {
+    display: none;
+  }
+  
+  #navLinksContainer img {
+    display: block;
+    width: 30px;
+  }
+
+  #footer {
+    height: 28%;
+    font-size: clamp(0.6rem, 0.65rem, 0.70rem);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media screen and (min-width : 320px) and (width <= 425px) {
+  /* .strCategoryThumbContainer{
+    padding: 10px;
+  } */
+
+  #divContainer {
+    width: 90%;
+  }
+  #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink {
+    text-align: center;
+    width: 80%;
+    margin: 20px;
+    /* padding: 30px; */
+  }
+
+  #logoContainer {
+    width: 70%;
+  }
+  #searchContainer {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #searchButton {
+    top : 31%;
+  }
+  #navLinkCheckBox, #searchCheckBox {
+    display: none;
+  }
+  #navLinkCheckBoxLabel, #searchCheckBoxLabel {
+    display: block;
+  }
+  #navLinksContainer, #searchContainer  {
+    position: absolute;
+    display: none;
+    right : -100%;
+  }
+  .menu-outline, .search-outline {
+    display: inline-block;
+    font-size: 1.5rem;
+  }
+
+  #navLinkCheckBox:checked~#navLinksContainer {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 200%;
+    background-color: white;
+    top : 110%;
+    right: 0%;
+    border: 1px solid;
+    z-index: 1;
+  }
+
+  #searchCheckBox:checked~#searchContainer {
+    display: block;
+    position: absolute;
+    right: 0%;
+    top : 70%;
+    z-index: 1;
+    width: 100%;
+  }
+
+  #navLinksContainer img {
+    display: block;
+    width: 75px;
+  }
+
+  #footer {
+    height: 22%;
+    font-size: clamp(0.3rem , 0.35rem, 0.5rem);
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width : 319px) {
+
+  #divContainer {
+    width: 90%;
+  }
+  #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink {
+    text-align: center;
+    width: 80%;
+    margin: 20px;
+    /* padding: 30px; */
+  }
+  
+
+  #logoContainer {
+    width: 70%;
+  }
+  #searchContainer {
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #searchButton {
+    top : 31%;
+  }
+  #navLinkCheckBox, #searchCheckBox {
+    display: none;
+  }
+  #navLinkCheckBoxLabel, #searchCheckBoxLabel {
+    display: block;
+  }
+  #navLinksContainer, #searchContainer  {
+    position: absolute;
+    display: none;
+    right : -100%;
+  }
+  .menu-outline, .search-outline {
+    display: inline-block;
+    font-size: 1.5rem;
+  }
+
+  #navLinkCheckBox:checked~#navLinksContainer {
+    /* display: block; */
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    height: 200%;
+    background-color: white;
+    top : 110%;
+    right: 0%;
+    border: 1px solid;
+    z-index: 1;
+  }
+
+  #searchCheckBox:checked~#searchContainer {
+    display: block;
+    right: 0%;
+    top : 70%;
+    z-index: 1;
+    width: 100%;
+  }
+
+  #navLinksContainer img {
+    display: block;
+    width: 75px;
+  }
+
+  /* CSS code for containers*/
+  #areaCardContainer, #ingredientCardContainer {
+    padding: 10px;
+  }
+
+  /* CSS code for Modals*/
+  /* #MealsCard, #mealsThumb {
+    padding: 0px;
+  } */
+
+  #footer {
+    height: 18%;
+    font-size: clamp(0.2rem , 0.25rem, 0.3rem);
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+.loginError{
+    display: none;
+    width: 100%;
+    color: red;
+}

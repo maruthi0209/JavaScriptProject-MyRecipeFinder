@@ -1,0 +1,46 @@
+Project Documentation: Meal Match (Recipes with Your Ingredients)
+
+Overview: The "Find Meals For Your Ingredients" app is a simple, yet powerful tool that helps users find recipes based on what they have in their kitchen. By integrating with the MealDB API, it provides detailed meal suggestions, including ingredients and cooking instructions, making it easy for users to cook meals without needing to search for a recipe manually. This project demonstrates how API integration can be used to create a helpful and user-friendly web application.
+
+Features:
+User Authentication:
+Users can create an account by signing up with their email and password.
+Returning users can log in to access their saved shopping cart and purchase history.
+User credentials are validated on the client-side before being sent to the server for authentication.
+
+
+Ingredient-Based Recipe Search:
+Input: Users can input a list of ingredients they have on hand (e.g., "chicken, tomato, onion").
+Search: The app searches the MealDB API to find recipes that include the entered ingredients.
+Multiple Ingredients Support: The user can input multiple ingredients separated by commas, and the app finds meals that match these ingredients.
+Meal Suggestions:
+
+Meal Cards: Each meal is displayed in a "meal card" that includes:
+Meal name
+Meal image
+A link to the a YouTube video 
+
+
+Detailed Meal Information:
+Ingredients List: After clicking a meal card, the user can see the detailed list of ingredients required for the recipe, including quantities.
+Cooking Instructions: The app displays step-by-step cooking instructions for each meal.
+Recipe Link: A link to the full recipe on the MealDB website or YouTube tutorial for a more detailed guide.
+
+Dynamic User Interface:
+Grid Layout: Meals are displayed in a responsive grid layout, making it easy to browse through multiple suggestions.
+Responsive Design: The page layout adjusts for different screen sizes (mobile, tablet, desktop) to ensure the app works well on any device.
+
+Meal Information Enhancements:
+Ingredient Details: The app fetches and displays the quantity and name of each ingredient for the recipe (e.g., "1 cup chicken broth," "2 cloves garlic").
+Multiple Ingredients Display: The app displays ingredients dynamically, up to 20 ingredients, as returned by the MealDB API.
+
+Technologies Used:
+Frontend: HTML, CSS, JavaScript.
+API Integration: MealDB API (for recipe data)
+Data Format: JSON (for API responses)
+Responsive Design: Media Queries for mobile-friendly layout
+
+
+To Be Done - 
+1. Search functionality
+2. User Validation
