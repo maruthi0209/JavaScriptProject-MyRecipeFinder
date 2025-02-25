@@ -164,6 +164,22 @@
   display: none;
 }
 
+/* CSS code for loader screen*/
+#loaderScreen {
+  transform: translateY(5%);
+  width: 30%;
+  margin: auto;
+}
+#loaderAnimation img {
+  display: block;
+  width: 100%;
+}
+#loaderQuote {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.5rem;
+}
+
 /* CSS code for body section*/
 body {
   width: 100vw;
@@ -586,6 +602,13 @@ iframe {
 
 /* Media Queries*/
 @media screen and (min-width : 768px ) and (max-width : 1024px) {
+  #loaderScreen {
+    width: 60%;
+    margin: auto;
+  }
+  #loaderQuote {
+    font-size: 1.5rem;
+  }
 
   #logoContainer {
     width: 35%;
@@ -609,6 +632,13 @@ iframe {
 }
 
 @media screen and (width > 425px) and (max-width : 767px) {
+  #loaderScreen {
+    width: 80%;
+    margin: auto;
+  }
+  #loaderQuote {
+    font-size: 1.2rem;
+  }
 
   #divContainer {
     width: 60%;
@@ -648,9 +678,10 @@ iframe {
 }
 
 @media screen and (min-width : 320px) and (width <= 425px) {
-  /* .strCategoryThumbContainer{
-    padding: 10px;
-  } */
+  #loaderScreen {
+    width: 60%;
+    margin: auto;
+  }
 
   #divContainer {
     width: 90%;
@@ -727,6 +758,11 @@ iframe {
 }
 
 @media screen and (max-width : 319px) {
+
+  #loaderScreen {
+    width: 80%;
+    margin: auto;
+  }
 
   #divContainer {
     width: 90%;

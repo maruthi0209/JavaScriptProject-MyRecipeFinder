@@ -24,11 +24,10 @@ const listOfCountries = new Map([["American", 'https://www.countryflags.com/wp-c
 ["Mexican", 'https://www.countryflags.com/wp-content/uploads/mexico-flag-png-large.png']]);
 
 window.addEventListener("load", () => {
+        displayLoader();
         populateHeaderSection();
         populateMainSection();
         populateFooterSection();
-
-        // displayLoader();
 })
 
 async function getData(URL) {
@@ -92,17 +91,14 @@ function displayLoader() {
     loaderAnimation.innerHTML = `<img src=${animationArrays[Math.floor(Math.random() * animationArrays.length)]} alt="Cooking Gif for you darling!">`;
     let loaderQuote = document.createElement("div");
     loaderQuote.id = "loaderQuote";
+    loaderQuote.classList.add("dancing-script-text");
     loaderQuote.innerText = quoteArrays[Math.floor(Math.random() * quoteArrays.length)];
     loaderScreen.append(loaderAnimation, loaderQuote);
     console.log(loaderQuote.innerText, loaderAnimation.innerHTML);
-    // if (display) {
-    //     loaderScreen.classList.remove("removeLoader");
-    //     loaderScreen.classList.add("displayLoader");
-    // } else {
-    //     loaderScreen.classList.remove("displayLoader");
-    //     loaderScreen.classList.add("removeLoader");
-    // }
     loaderScreen.style.display = "block";
+    setTimeout(()=>{
+        loaderScreen.style.display = "none";
+    }, 5000);
     document.body.appendChild(loaderScreen);
 }
 
@@ -155,6 +151,10 @@ function populateHeaderSection() {
 
 function populateMainSection() {
     let mainSection = document.getElementById("mainContainer");
+    mainSection.style.display = "none";
+    setTimeout(()=> {
+        mainSection.style.display = "block";
+    }, 3000);
     let categoryContainer = document.createElement("div");
     categoryContainer.id = "categoryContainer";
     let ingredientContainer = document.createElement("div");
@@ -291,7 +291,10 @@ async function populateRandomSection(randomContainer) {
     setTimeout(() => {
     let randomData = randomDataArray[Math.floor(Math.random() * 6)]; // source: https://stackoverflow.com/questions/4959975/generate-random-number-between-two-numbers-in-javascript
     // console.log(randomData);
-    let randomTitle = document.createElement("div");
+    if (randomData == undefined) {
+        window.location.reload();
+    } else {
+        let randomTitle = document.createElement("div");
     randomTitle.id = "randomTitle";
     randomTitle.classList.add("corinthia-bold");
     randomTitle.innerText = "Recipe of the Day!" ;
@@ -307,6 +310,7 @@ async function populateRandomSection(randomContainer) {
         setLocalStorage(randomData, "randomData");
         window.location.href = "./randomData.html";
     });
+    }
     }, 2000);
 }
 
@@ -432,6 +436,10 @@ function displayAreaModal(areaModal, areaData) {
 
 function populateFooterSection() {
     let footerSection = document.getElementById("footer");
+    footerSection.style.display = "none";
+    setTimeout(()=> {
+        footerSection.style.display = "block";
+    }, 3000);
     let aboutContainer = document.createElement("div");
     aboutContainer.id = "aboutContainer";
     let aboutContentHeading = document.createElement("h1");

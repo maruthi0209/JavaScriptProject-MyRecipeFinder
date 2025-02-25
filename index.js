@@ -79,18 +79,6 @@ async function postCredentials(userDetails) {
     }
 }
 
-function displayToastMessage(display) {
-    
-    message
-    // if (display) {
-    //     messageContainer.classList.remove("removeMessage");
-    //     messageContainer.classList.add("displayMessage");
-    // } else {
-    //     messageContainer.classList.remove("displayMessage");
-    //     messageContainer.classList.add("removeMessage");
-    // }
-}
-
 function populateLogin(arrayOfUsers) {
     let mainContainer = document.getElementById("maincontainer");
     let videoContainer = document.createElement("div");
@@ -135,11 +123,13 @@ function populateLogin(arrayOfUsers) {
                 // Signed up 
                 const user = userCredential.user;
                 console.log(email,password)
-                messageContainer.style.display = "block";
-                setTimeout(5000, () => {
-                    messageContainer.style.display = "block";
-                })
+                // messageContainer.style.display = "block";
+                // setTimeout(5000, () => {
+                //     messageContainer.style.display = "none";
+                // })
                 window.location.href = "./home.html";
+                loginEmail.value = ""
+                loginPass.value = ""
             })
             .catch((error) => {
                 const errorCode = error.code;
