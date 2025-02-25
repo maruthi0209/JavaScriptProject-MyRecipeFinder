@@ -163,7 +163,7 @@ function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, f
         let text = document.createElement("p");
         let button = document.createElement("button");
         button.id = "signbutton";
-        button.innerText = "Count me in!";
+        button.innerText = "Sign up!";
         button.addEventListener("click", () => {
             // if(checkCredentials(arrayOfUsers)) {
             //     text.innerText = "Looks like you're already a member. Refresh the page to login or if you don't remember it, click the forgot password link below."
@@ -172,7 +172,11 @@ function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, f
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
-    text.innerText = "We got your credentials. You can refresh the page to login.";
+    if(postCredentials(Object({"username" : `${signEmail.value}`, "password" : `${signPass.value}`}))) {
+                    text.innerText = "We got your credentials. You can refresh the page to login.";
+    } else {
+                    text.innerText = "Uh-oh! we are unable to save your credentials due to a technical issue. Try again after some time.";
+    }
     // ...
   })
   .catch((error) => {
@@ -180,13 +184,6 @@ function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, f
     const errorMessage = error.message;
     // ..
   });
-
-                // if(postCredentials(Object({"username" : `${signEmail.value}`, "password" : `${signPass.value}`}))) {
-                //     text.innerText = "We got your credentials. You can refresh the page to login.";
-                // } else {
-                //     text.innerText = "Uh-oh! we are unable to save your credentials due to a technical issue. Try again after some time.";
-                // }
-            // }
         })
         signEmail.addEventListener("input", () => {
             if (!signEmail.value.match(/^[a-zA-Z]+$/)) {
@@ -227,12 +224,17 @@ function populateForgotPassword(mainContainer, divContainer, forgotPasswordLink,
         button.id = "forgotbutton";
         button.innerText = "Show me!";
         button.addEventListener("click", () => {
-            for(user in arrayOfUsers) {
-                if(Object.values(arrayOfUsers[user]).includes(loginEmail.value)) {
-                    secretPass.textContent = `${arrayOfUsers[user]['password']}`;
+            // console.log(arrayOfUsers)
+            for(let user of arrayOfUsers) {
+                // console.log(user['username'] == loginEmail.value);
+                // if(Object.values(arrayOfUsers[user]).includes(loginEmail.value)) {
+                if(user['username'] == loginEmail.value) {
+                    // secretPass.textContent = `Your password is : ${arrayOfUsers[user]['password']}`;
+                    secretPass.textContent = `Your password is : ${user['password']}`;
                     setTimeout(() => {
                         secretPass.style.display = "none";
                     }, 5000);
+                    break;
                 } else {
                     secretPass.textContent = "Looks like you are not in the club.";
                     signUpLink.style.display = "block";
