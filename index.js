@@ -2,6 +2,7 @@
  * Code for Landing page
  */
 const URL = "https://pricey-atom-muskox.glitch.me/data";
+const videoMQ = window.matchMedia("(max-width: 425px)");//https://stackoverflow.com/questions/44688393/detect-dynamic-media-queries-with-javascript-without-hardcoding-the-breakpoint-w
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
@@ -83,7 +84,13 @@ function populateLogin(arrayOfUsers) {
     let mainContainer = document.getElementById("maincontainer");
     let videoContainer = document.createElement("div");
     videoContainer.id = "videoContainer";
-    videoContainer.innerHTML = `<video autoplay loop muted width="100%"><source src="./loginvideo.mp4" type="video/mp4"></video>`; // Video needs to muted in order for it to be autoplayed.
+    videoMQ.addEventListener("change", (event) => {
+        if(event.matches) {
+            videoContainer.innerHTML = `<video autoplay loop muted width="100%"><source src="./loginvideolong.mp4" type="video/mp4"></video>`; // Video needs to muted in order for it to be autoplayed.
+        } else {
+            videoContainer.innerHTML = `<video autoplay loop muted width="100%"><source src="./loginvideo.mp4" type="video/mp4"></video>`; // Video needs to muted in order for it to be autoplayed.
+        }
+    })
     let divContainer = document.createElement("div");
     divContainer.id = "divContainer";
     let loginEmail = document.createElement("input");
