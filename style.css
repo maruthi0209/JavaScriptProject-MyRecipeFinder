@@ -777,8 +777,12 @@ iframe {
     margin: auto;
   }
 
+  #videoContain {
+    width: 100%;
+  }
+
   #divContainer {
-    transform: translateY(10%);
+    transform: translateY(5%);
     width: 80%;
   }
   #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink {

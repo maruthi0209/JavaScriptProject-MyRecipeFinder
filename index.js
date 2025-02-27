@@ -2,7 +2,7 @@
  * Code for Landing page
  */
 const URL = "https://pricey-atom-muskox.glitch.me/data";
-const videoMQ = window.matchMedia("(max-width: 425px)");//https://stackoverflow.com/questions/44688393/detect-dynamic-media-queries-with-javascript-without-hardcoding-the-breakpoint-w
+const videoMQ = window.matchMedia("(width <= 425px)");//https://stackoverflow.com/questions/44688393/detect-dynamic-media-queries-with-javascript-without-hardcoding-the-breakpoint-w
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
@@ -40,7 +40,7 @@ async function getCredentials() {
         if (response.ok) {
             localStorage.setItem("arrayOfUsers", JSON.stringify(await response.json())); 
             arrayOfUsers = JSON.parse(localStorage.getItem("arrayOfUsers"));  
-            console.log(arrayOfUsers);
+            // console.log(arrayOfUsers);
         } else {
             throw new Error("Failed to get login data. Please try again after some time.")
         }
@@ -84,13 +84,13 @@ function populateLogin(arrayOfUsers) {
     let mainContainer = document.getElementById("maincontainer");
     let videoContainer = document.createElement("div");
     videoContainer.id = "videoContainer";
-    videoMQ.addEventListener("change", (event) => {
-        if(event.matches) {
+    // videoMQ.addEventListener("change", (event) => { // https://stackoverflow.com/questions/74569100/using-css-media-queries-inside-a-javascript-file
+        if(videoMQ.matches) {
             videoContainer.innerHTML = `<video autoplay loop muted width="100%"><source src="./loginvideolong.mp4" type="video/mp4"></video>`; // Video needs to muted in order for it to be autoplayed.
         } else {
             videoContainer.innerHTML = `<video autoplay loop muted width="100%"><source src="./loginvideo.mp4" type="video/mp4"></video>`; // Video needs to muted in order for it to be autoplayed.
         }
-    })
+    // })
     let divContainer = document.createElement("div");
     divContainer.id = "divContainer";
     let loginEmail = document.createElement("input");
