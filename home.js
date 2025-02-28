@@ -106,10 +106,10 @@ function displayLoader() {
 async function searchBasedOnInput(searchBarValue) {
     let allIngredients = await getData(allIngredientsURL);
     // console.log(allIngredients['meals'], searchBarValue)
-    let searchResults = new Array()
+    var searchResults = new Array()
     allIngredients['meals'].forEach((meal) => {
         if (meal['strIngredient'].toLowerCase().includes(searchBarValue)){
-            console.log(meal['strIngredient'])
+            // console.log(meal['strIngredient'])
             fetch(categorySearchURL + meal['strIngredient'])
             .then((response) => {
                 if(response.ok) {
@@ -129,18 +129,34 @@ async function searchBasedOnInput(searchBarValue) {
     return searchResults;
 }
 
-function populateSearchModal(mealsList, searchTerm) {
-    let modalHeader = document.createElement("div")
-    modalHeader.id = "searchModalHeader";
-    modalHeader.classList.add("dancing-script-text");
-    modalHeader.innerText = "Search results for " + searchTerm;
+async function populateSearchModal(mealsList) {
+    console.log(mealsList)
+    let searchModal = document.getElementById("searchModal")
+    let searchModalBackButton = returnBackButton(searchModal)
     let modalBody = document.createElement("div");
-    modalBody.id = "searchModalBody";
-    mealsList.forEach((meal) => {
+        modalBody.id = "searchModalBody";
+        mealsList.forEach((meal) => {
+        // console.log(meal)
         let mealCard = document.createElement("div");
         mealCard.id = "searchMealCard";
-        
+        let mealCardImageContainer = document.createElement("div");
+        mealCardImageContainer.id = "mealCardImageContainer";
+        mealCardImageContainer.innerHTML = `<img src="${meal['strMealThumb']}">`;
+        let mealCardName = document.createElement("div");
+        mealCardName.id = "mealCardName"
+        mealCard.classList.add("dancing-script-text");
+        mealCardName.innerText = `${meal['strMeal']}`;
+        mealCard.append(mealCardImageContainer, mealCardName);
+        modalBody.appendChild(mealCard);
+
+        mealCard.addEventListener("click", async () => {
+        // await getData(idURL + `${meal['idMeal']}`);
+        // console.log((await getData(idURL + `${meal['idMeal']}`))['meals']);
+        setLocalStorage((await getData(idURL + `${meal['idMeal']}`))['meals'][0], "randomData");
+        window.location.href = "./randomData.html";
+        })
     })
+    searchModal.append(searchModalBackButton, modalBody)    
 }
 
 function populateHeaderSection() {
@@ -157,6 +173,7 @@ function populateHeaderSection() {
     searchBar.id = "searchbar";
     searchBar.type = "text";
     searchBar.placeholder = "Search ingredients";
+    searchBar.style.paddingLeft = "10px";
     // searchBar.addEventListener("input", () => {
     //     searchBasedOnInput(searchBar)
     // })
@@ -164,8 +181,22 @@ function populateHeaderSection() {
     let searchButton = document.createElement("button");
     searchButton.id = "searchButton";
     searchButton.innerHTML = `<ion-icon name="search-outline"></ion-icon>`;
-    searchButton.addEventListener("click", () => { // https://medium.com/@cgustin/tutorial-simple-search-filter-with-vanilla-javascript-fdd15b7640bf
-        populateSearchModal(searchBasedOnInput(searchBar.value), searchBar.value)
+    searchButton.addEventListener("click",async () => { // https://medium.com/@cgustin/tutorial-simple-search-filter-with-vanilla-javascript-fdd15b7640bf
+
+        // console.log(mealsList)
+        let searchModal = document.getElementById("searchModal")
+        searchModal.innerHTML = ``;
+        searchModal.style.display = "block";
+        let searchLoader = document.createElement("div")
+        searchLoader.id = "searchLoader";
+        searchLoader.className = "loader";
+        searchLoader.style.display = "block";
+        searchModal.appendChild(searchLoader);
+        let mealsList = await searchBasedOnInput(searchBar.value)
+        setTimeout(() => {
+            searchLoader.style.display = "none";
+            populateSearchModal(mealsList)
+        }, 5000)
     })
     searchbarContainer.append(searchBar, searchButton);
     let navLinksContainer = document.createElement("div");
@@ -204,7 +235,6 @@ function populateMainSection() {
     }, 3000);
     let searchModal = returnModal("searchModal");
     searchModal.id = "searchModal";
-    searchModal.style.display = "none";
     let categoryContainer = document.createElement("div");
     categoryContainer.id = "categoryContainer";
     let ingredientContainer = document.createElement("div");
