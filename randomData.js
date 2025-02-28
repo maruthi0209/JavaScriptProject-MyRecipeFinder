@@ -90,7 +90,7 @@ function populateMainContentSection() {
     randomIFrame.id = "randomIFrame";
     let iFrame = document.createElement("iframe");
     iFrame.title = "randomIFrame";
-    iFrame.src = `${randomData['Youtube']}`;
+    iFrame.src = `${randomData['strYoutube']}`;
     randomIFrame.appendChild(iFrame);
     let randomIngredients = createIngredientsMap(randomData);
     randomDetails.append(randomCategory, randomArea, randomIngredients);
