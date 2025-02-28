@@ -6,6 +6,7 @@ const categorySearchURL = "https://www.themealdb.com/api/json/v1/1/filter.php?i=
 const ingredientURL = "https://pricey-atom-muskox.glitch.me/ingredient";
 const randomURL = "https://pricey-atom-muskox.glitch.me/random";
 const alphabetURL = "https://www.themealdb.com/api/json/v1/1/search.php?f=";
+const allIngredientsURL = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
 const alphabetArray = [...Array(26)].map((_, i) => String.fromCharCode(i + 65));  // source : https://hasnode.byrayray.dev/how-to-generate-an-alphabet-array-with-javascript
 const areaURL = "https://www.themealdb.com/api/json/v1/1/filter.php?a=";
 const idURL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
@@ -102,6 +103,46 @@ function displayLoader() {
     document.body.appendChild(loaderScreen);
 }
 
+async function searchBasedOnInput(searchBarValue) {
+    let allIngredients = await getData(allIngredientsURL);
+    // console.log(allIngredients['meals'], searchBarValue)
+    let searchResults = new Array()
+    allIngredients['meals'].forEach((meal) => {
+        if (meal['strIngredient'].toLowerCase().includes(searchBarValue)){
+            console.log(meal['strIngredient'])
+            fetch(categorySearchURL + meal['strIngredient'])
+            .then((response) => {
+                if(response.ok) {
+                    return response.json()
+                } else {
+                    throw new error("There was a problem trying to fetch the data. Please try again later.")
+            }})
+            .then((meallist) => {
+                if (meallist['meals'] != null) {
+                    // console.log(meallist['meals'])
+                meallist['meals'].forEach((meal) => {
+                    searchResults.push(meal)
+                }) } 
+            })
+        }
+    })
+    return searchResults;
+}
+
+function populateSearchModal(mealsList, searchTerm) {
+    let modalHeader = document.createElement("div")
+    modalHeader.id = "searchModalHeader";
+    modalHeader.classList.add("dancing-script-text");
+    modalHeader.innerText = "Search results for " + searchTerm;
+    let modalBody = document.createElement("div");
+    modalBody.id = "searchModalBody";
+    mealsList.forEach((meal) => {
+        let mealCard = document.createElement("div");
+        mealCard.id = "searchMealCard";
+        
+    })
+}
+
 function populateHeaderSection() {
     let headerSection = document.getElementById("header");
     let logoContainer = document.createElement("div");
@@ -115,11 +156,17 @@ function populateHeaderSection() {
     let searchBar = document.createElement("input");
     searchBar.id = "searchbar";
     searchBar.type = "text";
-    searchBar.placeholder = "Search ingredient or category";
+    searchBar.placeholder = "Search ingredients";
+    // searchBar.addEventListener("input", () => {
+    //     searchBasedOnInput(searchBar)
+    // })
     // searchBar.placeholder.classList.add("dancing-script-text");
     let searchButton = document.createElement("button");
     searchButton.id = "searchButton";
     searchButton.innerHTML = `<ion-icon name="search-outline"></ion-icon>`;
+    searchButton.addEventListener("click", () => { // https://medium.com/@cgustin/tutorial-simple-search-filter-with-vanilla-javascript-fdd15b7640bf
+        populateSearchModal(searchBasedOnInput(searchBar.value), searchBar.value)
+    })
     searchbarContainer.append(searchBar, searchButton);
     let navLinksContainer = document.createElement("div");
     navLinksContainer.id = "navLinksContainer";
@@ -155,6 +202,9 @@ function populateMainSection() {
     setTimeout(()=> {
         mainSection.style.display = "block";
     }, 3000);
+    let searchModal = returnModal("searchModal");
+    searchModal.id = "searchModal";
+    searchModal.style.display = "none";
     let categoryContainer = document.createElement("div");
     categoryContainer.id = "categoryContainer";
     let ingredientContainer = document.createElement("div");
@@ -171,7 +221,7 @@ function populateMainSection() {
     populateRandomSection(randomContainer);
     populateAlphabetSection(alphabetContainer);
     populateAreaSection(areaContainer);
-    mainSection.append(categoryContainer, ingredientContainer, randomContainer, alphabetContainer, areaContainer);
+    mainSection.append(searchModal, categoryContainer, ingredientContainer, randomContainer, alphabetContainer, areaContainer);
 }
 
 async function populateCategorySection(categoryContainer) {
