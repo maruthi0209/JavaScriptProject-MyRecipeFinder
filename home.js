@@ -103,42 +103,55 @@ function displayLoader() {
     document.body.appendChild(loaderScreen);
 }
 
-async function searchBasedOnInput(searchBarValue) {
+// async function searchBasedOnInput(searchBarValue) {
+async function searchBasedOnInput(searchList) {
     let allIngredients = await getData(allIngredientsURL);
     // console.log(allIngredients['meals'], searchBarValue)
     var searchResults = new Array()
     allIngredients['meals'].forEach((meal) => {
-        if (meal['strIngredient'].toLowerCase().includes(searchBarValue)){
-            // console.log(meal['strIngredient'])
-            fetch(categorySearchURL + meal['strIngredient'])
-            .then((response) => {
-                if(response.ok) {
-                    return response.json()
-                } else {
-                    throw new error("There was a problem trying to fetch the data. Please try again later.")
-            }})
-            .then((meallist) => {
-                if (meallist['meals'] != null) {
-                    // console.log(meallist['meals'])
-                meallist['meals'].forEach((meal) => {
-                    searchResults.push(meal)
-                }) } 
-            })
+        for(searchValue of searchList) {
+            if (meal['strIngredient'].toLowerCase().includes(searchValue)){
+                // console.log(meal['strIngredient'])
+                fetch(categorySearchURL + meal['strIngredient'])
+                .then((response) => {
+                    if(response.ok) {
+                        return response.json()
+                    } else {
+                        throw new error("There was a problem trying to fetch the data. Please try again later.")
+                }})
+                .then((meallist) => {
+                    if (meallist['meals'] != null) {
+                    // if (meallist['meals'].length != 0) {
+                        console.log(meallist['meals'])
+                    meallist['meals'].forEach((meal) => {
+                        searchResults.push(meal)
+                    }) } 
+                })
+            }
         }
+        
     })
     return searchResults;
 }
 
 async function populateSearchModal(mealsList) {
+    if(mealsList.length == 0) {
+        badCook = ["./fire-cooking.gif", "bad-bad-cook.gif"]
+        noMealFound = {
+            "strMeal" : "Sorry! No recipes found. Try another ingredient or modify your search",
+            "strMealThumb" : `${badCook[Math.floor(Math.random() * badCook.length)]}`
+        }
+        mealsList.push(noMealFound)
+    }
     console.log(mealsList)
     let searchModal = document.getElementById("searchModal")
     let searchModalBackButton = returnBackButton(searchModal)
     let modalBody = document.createElement("div");
-        modalBody.id = "searchModalBody";
-        mealsList.forEach((meal) => {
+    (mealsList[0]['strMeal'].includes("Sorry!"))? modalBody.id ="searchModalBodyEmpty" : modalBody.id = "searchModalBody";
+    mealsList.forEach((meal) => {
         // console.log(meal)
         let mealCard = document.createElement("div");
-        mealCard.id = "searchMealCard";
+        (mealsList[0]['strMeal'].includes("Sorry!"))? mealCard.id ="mealCardEmpty" : mealCard.id = "searchMealCard";
         let mealCardImageContainer = document.createElement("div");
         mealCardImageContainer.id = "mealCardImageContainer";
         mealCardImageContainer.innerHTML = `<img src="${meal['strMealThumb']}">`;
@@ -192,7 +205,13 @@ function populateHeaderSection() {
         searchLoader.className = "loader";
         searchLoader.style.display = "block";
         searchModal.appendChild(searchLoader);
-        let mealsList = await searchBasedOnInput(searchBar.value)
+        let searchList = []
+        searchBar.value.split(",").forEach((searchword)=>{
+            searchList.push(searchword.trim())
+        })
+        console.log(searchList)
+        // let mealsList = await searchBasedOnInput(searchBar.value)
+        let mealsList = await searchBasedOnInput(searchList)
         setTimeout(() => {
             searchLoader.style.display = "none";
             populateSearchModal(mealsList)

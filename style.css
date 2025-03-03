@@ -191,6 +191,13 @@ body {
   margin: auto;
   transform: translateY(200%);
 }
+#searchModalBodyEmpty {
+  padding: 10px;
+}
+#mealCardEmpty {
+  margin: auto;
+  width: 40%;
+}
 /* HTML: <div class="loader"></div> */
 .loader {
   width: 80px;
