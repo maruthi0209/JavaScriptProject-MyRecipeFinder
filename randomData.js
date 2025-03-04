@@ -1,13 +1,150 @@
 /**
  *  Code for randomData
  */
-window.addEventListener("load", () => {
+const allIngredientsURL = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
+const categorySearchURL = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
 
+window.addEventListener("load", () => {
+    displayLoader()
     populateHeaderSection();
     populateMainContentSection();
     populateFooterSection();
      
 });
+
+function displayLoader() {
+    quoteArrays = ['"Let food be thy medicine and medicine be thy food." - Hippocrates', 
+        '"People who love to eat are always the best people." - Julia Child',
+        '"The only way to get rid of a temptation is to yield to it." - Oscar Wilde',
+        '"First we eat, then we do everything else." - M.F.K. Fisher',
+        '"Food should be fun." - Thomas Keller'];
+    animationArrays = ["./bbqGiphy.gif", "./gokGiphy.gif", "./panGiphy.gif", "./playGiphy.gif", "./potGiphy.gif"];
+    let loaderScreen = document.createElement("div");
+    loaderScreen.id = "loaderScreen";
+    let loaderAnimation = document.createElement("div");
+    loaderAnimation.id = "loaderAnimation";
+    loaderAnimation.innerHTML = `<img src=${animationArrays[Math.floor(Math.random() * animationArrays.length)]} alt="Cooking Gif for you darling!">`;
+    let loaderQuote = document.createElement("div");
+    loaderQuote.id = "loaderQuote";
+    loaderQuote.classList.add("dancing-script-text");
+    loaderQuote.innerText = quoteArrays[Math.floor(Math.random() * quoteArrays.length)];
+    loaderScreen.append(loaderAnimation, loaderQuote);
+    console.log(loaderQuote.innerText, loaderAnimation.innerHTML);
+    loaderScreen.style.display = "block";
+    setTimeout(()=>{
+        loaderScreen.style.display = "none";
+    }, 3000);
+    document.body.appendChild(loaderScreen);
+}
+
+async function getData(URL) {
+    let responseData;
+    try {
+        // let response = await fetch(URL, {
+        //     method : "GET",
+        //     headers : {"content-type" : "application/json", "Access-Control-Allow-Origin": "*"}
+        // });
+        let response = await fetch(URL);
+        if (response.ok) { 
+            responseData = await response.json();
+            return responseData;
+        } else {
+            throw new Error("There was an error fetching the data. Please try again later.");
+        }        
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+// async function searchBasedOnInput(searchBarValue) {
+async function searchBasedOnInput(searchList) {
+    let allIngredients = await getData(allIngredientsURL);
+    // console.log(allIngredients['meals'], searchBarValue)
+    var searchResults = new Array()
+    allIngredients['meals'].forEach((meal) => {
+        for(searchValue of searchList) {
+            if (meal['strIngredient'].toLowerCase().includes(searchValue)){
+                // console.log(meal['strIngredient'])
+                fetch(categorySearchURL + meal['strIngredient'])
+                .then((response) => {
+                    if(response.ok) {
+                        return response.json()
+                    } else {
+                        throw new error("There was a problem trying to fetch the data. Please try again later.")
+                }})
+                .then((meallist) => {
+                    if (meallist['meals'] != null) {
+                    // if (meallist['meals'].length != 0) {
+                        console.log(meallist['meals'])
+                    meallist['meals'].forEach((meal) => {
+                        searchResults.push(meal)
+                    }) } 
+                })
+            }
+        }
+        
+    })
+    return searchResults;
+}
+
+async function populateSearchModal(mealsList) {
+    if(mealsList.length == 0) {
+        badCook = ["./fire-cooking.gif", "bad-bad-cook.gif"]
+        noMealFound = {
+            "strMeal" : "Sorry! No recipes found. Try another ingredient or modify your search",
+            "strMealThumb" : `${badCook[Math.floor(Math.random() * badCook.length)]}`
+        }
+        mealsList.push(noMealFound)
+    }
+    console.log(mealsList)
+    let searchModal = document.getElementById("searchModal")
+    let searchModalBackButton = returnBackButton(searchModal)
+    let modalBody = document.createElement("div");
+    (mealsList[0]['strMeal'].includes("Sorry!"))? modalBody.id ="searchModalBodyEmpty" : modalBody.id = "searchModalBody";
+    mealsList.forEach((meal) => {
+        // console.log(meal)
+        let mealCard = document.createElement("div");
+        (mealsList[0]['strMeal'].includes("Sorry!"))? mealCard.id ="mealCardEmpty" : mealCard.id = "searchMealCard";
+        let mealCardImageContainer = document.createElement("div");
+        mealCardImageContainer.id = "mealCardImageContainer";
+        mealCardImageContainer.innerHTML = `<img src="${meal['strMealThumb']}">`;
+        let mealCardName = document.createElement("div");
+        mealCardName.id = "mealCardName"
+        mealCard.classList.add("dancing-script-text");
+        mealCardName.innerText = `${meal['strMeal']}`;
+        mealCard.append(mealCardImageContainer, mealCardName);
+        modalBody.appendChild(mealCard);
+
+        mealCard.addEventListener("click", async () => {
+        // await getData(idURL + `${meal['idMeal']}`);
+        // console.log((await getData(idURL + `${meal['idMeal']}`))['meals']);
+        setLocalStorage((await getData(idURL + `${meal['idMeal']}`))['meals'][0], "randomData");
+        window.location.href = "./randomData.html";
+        })
+    })
+    searchModal.append(searchModalBackButton, modalBody)    
+}
+
+function returnModal(name) {
+    let modalName = document.createElement("div");
+    modalName.id = `${name}` + "Modal";
+    modalName.style.display = "none";
+    return modalName;
+}
+function returnBackButton(containerName) {
+    let backButtonContainer = document.createElement("div");
+    backButtonContainer.id = "backButtonCategoryContainer";
+    let backButton = document.createElement("button");
+    backButton.id = "backbuttonCategory";
+    backButton.textContent = "Back to Recipes"
+    backButton.addEventListener("click",() => {
+        containerName.innerHTML = '';
+        containerName.style.display = "none";
+    });
+    backButtonContainer.appendChild(backButton);
+    return backButtonContainer;
+}
+    
 
 function getLocalStorage(localStorageItem) {
     let localStorageData = JSON.parse(localStorage.getItem(localStorageItem));
@@ -27,10 +164,38 @@ function populateHeaderSection() {
     let searchBar = document.createElement("input");
     searchBar.id = "searchbar";
     searchBar.type = "text";
-    searchBar.placeholder = "Search ingredient or category";
+    searchBar.placeholder = "Search ingredients";
+    searchBar.style.paddingLeft = "10px";
+    // searchBar.addEventListener("input", () => {
+    //     searchBasedOnInput(searchBar)
+    // })
+    // searchBar.placeholder.classList.add("dancing-script-text");
     let searchButton = document.createElement("button");
     searchButton.id = "searchButton";
     searchButton.innerHTML = `<ion-icon name="search-outline"></ion-icon>`;
+    searchButton.addEventListener("click",async () => { // https://medium.com/@cgustin/tutorial-simple-search-filter-with-vanilla-javascript-fdd15b7640bf
+
+        // console.log(mealsList)
+        let searchModal = document.getElementById("searchModal")
+        searchModal.innerHTML = ``;
+        searchModal.style.display = "block";
+        let searchLoader = document.createElement("div")
+        searchLoader.id = "searchLoader";
+        searchLoader.className = "loader";
+        searchLoader.style.display = "block";
+        searchModal.appendChild(searchLoader);
+        let searchList = []
+        searchBar.value.split(",").forEach((searchword)=>{
+            searchList.push(searchword.trim())
+        })
+        console.log(searchList)
+        // let mealsList = await searchBasedOnInput(searchBar.value)
+        let mealsList = await searchBasedOnInput(searchList)
+        setTimeout(() => {
+            searchLoader.style.display = "none";
+            populateSearchModal(mealsList)
+        }, 5000)
+    })
     searchbarContainer.append(searchBar, searchButton);
     let navLinksContainer = document.createElement("div");
     navLinksContainer.id = "navLinksContainer";
@@ -64,6 +229,12 @@ function populateMainContentSection() {
     let mainContainer = document.getElementById("mainContainerRandom")
     let randomData = getLocalStorage("randomData");
     // localStorage.removeItem("randomData");// console.log(randomData); 
+    mainContainer.style.display = "none";
+    setTimeout(()=> {
+        mainContainer.style.display = "block";
+    }, 3000);
+    let searchModal = returnModal("searchModal");
+    searchModal.id = "searchModal";
     let randomFlex = document.createElement("div");
     randomFlex.id = "randomFlex";
     let randomDetails = document.createElement("div");
@@ -96,7 +267,7 @@ function populateMainContentSection() {
     randomDetails.append(randomCategory, randomArea, randomIngredients);
     randomFlex.append(randomThumb, randomDetails);
     
-    mainContainer.append(randomName, randomFlex, randomInstructions, randomIFrame);
+    mainContainer.append(searchModal, randomName, randomFlex, randomInstructions, randomIFrame);
     if (randomData['strSource'] !== null || randomData['strSource'] !== "" || randomData['strSource'] !== " ") {
         let randomSource = document.createElement("div");
         randomSource.id = "randomSource";
@@ -147,6 +318,10 @@ function createIngredientsMap(randomData) {
 
 function populateFooterSection() {
     let footerSection = document.getElementById("footer");
+    footerSection.style.display = "none";
+    setTimeout(()=> {
+        footerSection.style.display = "block";
+    }, 3000);
     let aboutContainer = document.createElement("div");
     aboutContainer.id = "aboutContainer";
     let aboutContentHeading = document.createElement("h2");

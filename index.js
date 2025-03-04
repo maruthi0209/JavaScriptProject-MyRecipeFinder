@@ -38,8 +38,7 @@ async function getCredentials() {
     try {
         let response = await fetch(URL, {method : "GET"});
         if (response.ok) {
-            localStorage.setItem("arrayOfUsers", JSON.stringify(await response.json())); 
-            arrayOfUsers = JSON.parse(localStorage.getItem("arrayOfUsers"));  
+            arrayOfUsers = await response.json(); 
             // console.log(arrayOfUsers);
         } else {
             throw new Error("Failed to get login data. Please try again after some time.")
@@ -134,9 +133,9 @@ function populateLogin(arrayOfUsers) {
                 // setTimeout(5000, () => {
                 //     messageContainer.style.display = "none";
                 // })
-                window.location.href = "./home.html";
                 loginEmail.value = ""
                 loginPass.value = ""
+                window.location.href = "./home.html";
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -232,6 +231,7 @@ function populateForgotPassword(mainContainer, divContainer, forgotPasswordLink,
         button.innerText = "Show me!";
         button.addEventListener("click", () => {
             // console.log(arrayOfUsers)
+
             for(let user of arrayOfUsers) {
                 // console.log(user['username'] == loginEmail.value);
                 // if(Object.values(arrayOfUsers[user]).includes(loginEmail.value)) {
