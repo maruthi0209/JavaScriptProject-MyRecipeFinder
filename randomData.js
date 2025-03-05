@@ -260,8 +260,11 @@ function populateMainContentSection() {
     let randomIFrame = document.createElement("div");
     randomIFrame.id = "randomIFrame";
     let iFrame = document.createElement("iframe");
-    iFrame.title = "randomIFrame";
-    iFrame.src = `${randomData['strYoutube']}`;
+    iFrame.title = "randomIFrame"; // to acheive 16:9 aspect ratio, refer: https://stackoverflow.com/questions/35814653/automatic-height-when-embedding-a-youtube-video
+    iFrame.src = `${randomData['strYoutube']}`.replace("watch?v=", "embed/");
+    iFrame.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
+    iFrame.allowFullscreen = true;
+    iFrame.setAttribute("referrerpolicy", "strict-origin-when-cross-origin");
     randomIFrame.appendChild(iFrame);
     let randomIngredients = createIngredientsMap(randomData);
     randomDetails.append(randomCategory, randomArea, randomIngredients);

@@ -63,13 +63,13 @@
   background-color: var(--main-bg-color);
 }
  #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink, 
-#signemail, #signpassword, #signbutton #forgotemail, .showPassword, #forgotbutton {
+#signemail, #signpassword, #signbutton #forgotemail, .showPassword, #forgotbutton, #skipLogin {
   text-align: center;
   width: 75%;
   margin: 15px;
   /* padding: 30px; */
 }
-#signUpLink:hover, #forgotPasswordLink:hover {
+#signUpLink:hover, #forgotPasswordLink:hover, #skipLogin:hover {
   border: 1px dotted;
 }
 #messageContainer {
@@ -535,7 +535,8 @@ padding: 10px;
 }
 #randomFlex {
   width: 100%;
-  margin: 30px 0px;
+  /* margin: 30px 0px; */
+  margin: auto;
   /* height: 50%; */
   display: flex;
   justify-content: space-evenly;
@@ -543,7 +544,7 @@ padding: 10px;
   /* gap : 10%; */
 }
 #randomThumb {
-  width: 35%;
+  width: 30%;
   padding: 10px;
 }
 #randomThumb img {
@@ -557,7 +558,7 @@ padding: 10px;
   justify-content: start;
   align-items: center;
   padding: 10px;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 #randomCategory, #randomArea {
   padding: 10px;
@@ -588,6 +589,7 @@ table th, table td {
 }
 iframe {
   width: 100%;
+  aspect-ratio: 16 / 9;
 }
 /* CSS code for RandomData page end*/
 
@@ -680,6 +682,16 @@ iframe {
     display: block;
     width: 40px;
   }
+
+  #randomDetails {
+    width: 35%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: 10px;
+    font-size: 1rem;
+  }
   
   #copyright, #footer p {
     height: 35%;
@@ -725,6 +737,31 @@ iframe {
   #navLinksContainer img {
     display: block;
     width: 30px;
+  }
+
+  #randomFlex {
+    margin: auto;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    /* gap : 10px; */
+  }
+  #randomThumb {
+    width: 50%;
+  }
+  #randomThumb img {
+    display: block;
+    width: 100%;
+  }
+  #randomDetails {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: 10px;
+    font-size: 1rem;
   }
 
   #footer {
@@ -806,6 +843,34 @@ iframe {
     width: 75px;
   }
 
+  #randomName {
+    font-size: 1.8rem;
+  }
+  #randomFlex {
+    margin: auto;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    /* gap : 10px; */
+  }
+  #randomThumb {
+    width: 50%;
+  }
+  #randomThumb img {
+    display: block;
+    width: 100%;
+  }
+  #randomDetails {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: 10px;
+    font-size: 0.8rem;
+  }
+
   #footer {
     height: 22%;
     font-size: clamp(0.3rem , 0.35rem, 0.5rem);
@@ -838,7 +903,6 @@ iframe {
     /* padding: 30px; */
   }
   
-
   #logoContainer {
     width: 70%;
   }
@@ -898,10 +962,33 @@ iframe {
     padding: 10px;
   }
 
-  /* CSS code for Modals*/
-  /* #MealsCard, #mealsThumb {
-    padding: 0px;
-  } */
+  #randomName {
+    font-size: 1.5rem;
+  }
+  #randomFlex {
+    margin: auto;
+    display: flex; 
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    /* gap : 10px; */
+  }
+  #randomThumb {
+    width: 50%;
+  }
+  #randomThumb img {
+    display: block;
+    width: 100%;
+  }
+  #randomDetails {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding: 10px;
+    font-size: 0.5rem;
+  }
 
   #footer {
     height: 18%;

@@ -96,10 +96,14 @@ function populateLogin(arrayOfUsers) {
     let loginPass = document.createElement("input");
     let signUpLink = document.createElement("a");
     signUpLink.id = "signUpLink";
+    signUpLink.innerText = "Sign Up!";
     let forgotPasswordLink = document.createElement("a");
     forgotPasswordLink.id = "forgotPasswordLink";
     forgotPasswordLink.innerText = "I forgot my password!";
-    signUpLink.innerText = "Sign Up!";
+    let skipLogin = document.createElement("a");
+    skipLogin.id = "skipLogin"
+    skipLogin.innerText = "Skip Login";
+    // skipLogin.innerHTML = `<a href="./home.html">Skip Login</a>`;
     loginEmail.setAttribute("type", "text");
     loginEmail.id = "email";
     loginPass.setAttribute("type", "password");
@@ -116,7 +120,7 @@ function populateLogin(arrayOfUsers) {
     messageContainer.id = "messageContainer";
     messageContainer.innerText = "Welcome back to the club!!";
     messageContainer.style.display = "none";
-    divContainer.append(loginError, loginEmail, loginPass, button, signUpLink, forgotPasswordLink, messageContainer);
+    divContainer.append(loginError, loginEmail, loginPass, button, signUpLink, skipLogin, forgotPasswordLink, messageContainer);
     mainContainer.append(videoContainer, divContainer);
     document.body.appendChild(mainContainer);
 
@@ -143,6 +147,10 @@ function populateLogin(arrayOfUsers) {
                 loginError.style.display = "block";
             });
     });
+
+    skipLogin.addEventListener("click", ()=> {
+        window.location.href = "./home.html";
+    })
 
     populateForgotPassword(mainContainer, divContainer, forgotPasswordLink, arrayOfUsers, signUpLink);
 

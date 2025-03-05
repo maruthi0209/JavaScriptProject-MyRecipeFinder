@@ -95,7 +95,7 @@ function displayLoader() {
     loaderQuote.classList.add("dancing-script-text");
     loaderQuote.innerText = quoteArrays[Math.floor(Math.random() * quoteArrays.length)];
     loaderScreen.append(loaderAnimation, loaderQuote);
-    console.log(loaderQuote.innerText, loaderAnimation.innerHTML);
+    // console.log(loaderQuote.innerText, loaderAnimation.innerHTML);
     loaderScreen.style.display = "block";
     setTimeout(()=>{
         loaderScreen.style.display = "none";
