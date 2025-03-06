@@ -79,6 +79,10 @@ async function postCredentials(userDetails) {
     }
 }
 
+function displayLoginLoader(){
+
+}
+
 function populateLogin(arrayOfUsers) {
     let mainContainer = document.getElementById("maincontainer");
     let videoContainer = document.createElement("div");
@@ -118,7 +122,7 @@ function populateLogin(arrayOfUsers) {
     loginError.innerText = "Invalid Credentials. Please check your credentials and try again."
     let messageContainer = document.createElement("div");
     messageContainer.id = "messageContainer";
-    messageContainer.innerText = "Welcome back to the club!!";
+    messageContainer.className = "loader";
     messageContainer.style.display = "none";
     divContainer.append(loginError, loginEmail, loginPass, button, signUpLink, skipLogin, forgotPasswordLink, messageContainer);
     mainContainer.append(videoContainer, divContainer);
@@ -139,6 +143,10 @@ function populateLogin(arrayOfUsers) {
                 // })
                 loginEmail.value = ""
                 loginPass.value = ""
+                messageContainer.style.display = "block";
+                setTimeout(() => {
+                    messageContainer.style.display = "none"
+                }, 2000)
                 window.location.href = "./home.html";
             })
             .catch((error) => {
@@ -152,12 +160,12 @@ function populateLogin(arrayOfUsers) {
         window.location.href = "./home.html";
     })
 
-    populateForgotPassword(mainContainer, divContainer, forgotPasswordLink, arrayOfUsers, signUpLink);
+    populateForgotPassword(mainContainer, divContainer, forgotPasswordLink, arrayOfUsers, signUpLink, messageContainer);
 
-    populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, forgotPasswordLink);
+    populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, forgotPasswordLink, messageContainer);
 }
 
-function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, forgotPasswordLink) {    
+function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, forgotPasswordLink, messageContainer) {    
     signUpLink.addEventListener("click", () => {
         divContainer.innerHTML = ''
         let signEmail = document.createElement("input");
@@ -191,6 +199,10 @@ function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, f
     } else {
                     text.innerText = "Uh-oh! we are unable to save your credentials due to a technical issue. Try again after some time.";
     }
+    messageContainer.style.display = "block";
+                setTimeout(() => {
+                    messageContainer.style.display = "none"
+                }, 2000)
     // ...
   })
   .catch((error) => {

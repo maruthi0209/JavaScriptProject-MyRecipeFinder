@@ -101,6 +101,9 @@
   width:20%;
   height: 100%;
 }
+#logoContainer:hover {
+  cursor: pointer;
+}
 #logoContainer > img {
   display: block;
   width: 100%;
@@ -256,8 +259,10 @@ body {
   min-width: 150px;
   padding: 10px;
 }
-.categoryCard:hover {
+.categoryCard:hover, .ingredientCard:hover, #randomImgContainer:hover,
+.alphabetCard:hover, .areaCard:hover  {
   border : 1px solid var(--font-text-color);
+  cursor: pointer;
 }
 .categoryCard img {
   display: block;
@@ -479,9 +484,9 @@ padding: 10px;
   justify-self: center;
   padding: 10px;  
 }
-.areaCard:hover {
+/* .areaCard:hover {
   border: 1px dashed var(--font-text-color);
-}
+} */
 .areaCard img {
   display: block;
   width: 100%;
