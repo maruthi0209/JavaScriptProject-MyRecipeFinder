@@ -260,7 +260,7 @@ body {
   padding: 10px;
 }
 .categoryCard:hover, .ingredientCard:hover, #randomImgContainer:hover,
-.alphabetCard:hover, .areaCard:hover  {
+.alphabetCard:hover, .areaCard:hover, .strCategoryRecipes:hover, #alphabetCard:hover, #mealsCard:hover  {
   border : 1px solid var(--font-text-color);
   cursor: pointer;
 }
