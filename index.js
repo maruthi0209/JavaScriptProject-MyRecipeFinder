@@ -2,7 +2,7 @@
  * Code for Landing page
  */
 const URL = "https://pricey-atom-muskox.glitch.me/data";
-const videoMQ = window.matchMedia("(width <= 425px)");//https://stackoverflow.com/questions/44688393/detect-dynamic-media-queries-with-javascript-without-hardcoding-the-breakpoint-w
+const videoMQ = window.matchMedia("(width <= 768px)");//https://stackoverflow.com/questions/44688393/detect-dynamic-media-queries-with-javascript-without-hardcoding-the-breakpoint-w
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
@@ -79,10 +79,6 @@ async function postCredentials(userDetails) {
     }
 }
 
-function displayLoginLoader(){
-
-}
-
 function populateLogin(arrayOfUsers) {
     let mainContainer = document.getElementById("maincontainer");
     let videoContainer = document.createElement("div");
@@ -116,7 +112,7 @@ function populateLogin(arrayOfUsers) {
     loginPass.setAttribute("placeholder", "Enter your password");
     let button = document.createElement("button");
     button.id = "loginbutton";
-    button.innerText = "Click me";
+    button.innerText = "Click me!";
     let loginError = document.createElement("div");
     loginError.className = "loginError";
     loginError.innerText = "Invalid Credentials. Please check your credentials and try again."

@@ -44,13 +44,17 @@
 /* CSS code for Font ends*/
 
 /*CSS code for login page starts*/
+#videoContainer{
+  width: 100%;
+  height: 100%;
+}
 #videoContainer>video{
   position: absolute;
   z-index: -1;
 }
 #divContainer {
   position: relative;
-  padding-top: 20px;
+  padding-top: 10px;
   width: 20%;
   /* height: 60%; */
   transform: translateY(50%);
@@ -62,12 +66,17 @@
   border: 1px dashed;
   background-color: var(--main-bg-color);
 }
- #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink, 
-#signemail, #signpassword, #signbutton #forgotemail, .showPassword, #forgotbutton, #skipLogin {
+ #email, #password, .loginError, #signUpLink, #forgotPasswordLink, 
+#signemail, #signpassword, #loginbutton, #signbutto, #forgotemail, .showPassword, #forgotbutton, #skipLogin {
+  align-content: center;
   text-align: center;
-  width: 75%;
-  margin: 15px;
+  width: 85%;
+  height: 30px;
+  margin: 5px;
   /* padding: 30px; */
+}
+#loginbutton, #signbutton {
+  padding: 5px 10px;
 }
 #signUpLink:hover, #forgotPasswordLink:hover, #skipLogin:hover {
   border: 1px dotted;
@@ -296,6 +305,9 @@ body {
   font-size: 1 rem;
   height: 50px;
   /* padding: 10px; */
+}
+#backbuttonCategory:hover {
+  border: 1px dotted;
 }
 .strCategoryThumbContainer {
   font-size: 1.5rem;
@@ -682,6 +694,10 @@ iframe {
 
 /* Media Queries*/
 @media screen and (min-width : 768px ) and (max-width : 1024px) {
+  #videoContainer{
+    width: 100%;
+    height: 100%;
+  }
   #loaderScreen {
     width: 60%;
     margin: auto;
@@ -691,13 +707,14 @@ iframe {
   }
 
   #divContainer {
-    width: 40%;
+    transform: translateY(20%);
+    width: 30%;
   }
 #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink, 
 #signemail, #signpassword, #signbutton #forgotemail, .showPassword, #forgotbutton {
   text-align: center;
-  width: 75%;
-  margin: 10px;
+  width: 90%;
+  margin: 7px;
   /* padding: 30px; */
 }
   
@@ -733,6 +750,10 @@ iframe {
 }
 
 @media screen and (width > 425px) and (max-width : 767px) {
+  #videoContainer{
+    width: 100%;
+    height: 100%;
+  }
   #loaderScreen {
     width: 80%;
     margin: auto;
@@ -748,8 +769,8 @@ iframe {
   
   #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink {
     text-align: center;
-    width: 60%;
-    margin: 10px;
+    width: 90%;
+    margin: 7px;
     /* padding: 30px; */
   }
 
@@ -824,12 +845,13 @@ iframe {
   }
 
   #divContainer {
-    width: 90%;
+    width: 70%;
+    transform: translateY(10%);
   }
   #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink {
     text-align: center;
-    width: 80%;
-    margin: 10px;
+    width: 90%;
+    margin: 7px;
     /* padding: 30px; */
   }
 
@@ -951,11 +973,12 @@ iframe {
   #divContainer {
     transform: translateY(5%);
     width: 80%;
+    padding-top: 5px;
   }
   #email, #password, #loginbutton, .loginError, #signUpLink, #forgotPasswordLink {
     text-align: center;
-    width: 80%;
-    margin: 10px;
+    width: 90%;
+    margin: 5px;
     /* padding: 30px; */
   }
   
