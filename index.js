@@ -179,6 +179,9 @@ function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, f
         passError.innerText = "Password must be 8 characters long, contain one small letter, one capital letter and one integer from 0-9";
         passError.classList.add("loginError");
         let text = document.createElement("p");
+        let refreshToLogin = document.createElement("p")
+        refreshToLogin.id = "refreshToLogin";
+        refreshToLogin.innerText = "Refresh the page to go back to login";
         let button = document.createElement("button");
         button.id = "signbutton";
         button.innerText = "Sign up!";
@@ -223,7 +226,7 @@ function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, f
                     passError.style.display = "block";
                 }
         })
-        divContainer.append(signEmail, emailError, signPass, passError, text, button, forgotPasswordLink);
+        divContainer.append(signEmail, emailError, signPass, passError, text, button, forgotPasswordLink, refreshToLogin);
         mainContainer.appendChild(divContainer);
     })
 
@@ -239,33 +242,34 @@ function populateForgotPassword(mainContainer, divContainer, forgotPasswordLink,
         loginEmail.setAttribute("placeholder", "Enter your email");
         let passwordText = document.createElement("div");
         let secretPass = document.createElement("p");
+        secretPass.style.color = "red"
         passwordText.className = "showPassword";
-        passwordText.innerText = "We're gonna display your password for 5 seconds on the screen. Note it down before it's gone. Once done, refresh the page to go back to login."
+        passwordText.innerText = "We're gonna display your password for 5 seconds on the screen. Note it down and once done, refresh the page to go back to login."
         passwordText.appendChild(secretPass);
         let button = document.createElement("button");
         button.id = "forgotbutton";
-        button.innerText = "Show me!";
+        button.innerText = "Show me !";
+        divContainer.append(loginEmail, button, passwordText, signUpLink);
+        mainContainer.appendChild(divContainer);
         button.addEventListener("click", () => {
             // console.log(arrayOfUsers)
-
             for(let user of arrayOfUsers) {
                 // console.log(user['username'] == loginEmail.value);
                 // if(Object.values(arrayOfUsers[user]).includes(loginEmail.value)) {
                 if(user['username'] == loginEmail.value) {
                     // secretPass.textContent = `Your password is : ${arrayOfUsers[user]['password']}`;
                     secretPass.textContent = `Your password is : ${user['password']}`;
-                    setTimeout(() => {
-                        secretPass.style.display = "none";
-                    }, 5000);
                     break;
                 } else {
                     secretPass.textContent = "Looks like you are not in the club.";
                     signUpLink.style.display = "block";
                 }
-                }       
+                }
+            setTimeout(() => {
+                loginEmail.value = '';
+                secretPass.style.display = "none";
+            }, 5000);       
         });
-        divContainer.append(loginEmail, button, passwordText, signUpLink);
-        mainContainer.appendChild(divContainer);
     })
 }
 

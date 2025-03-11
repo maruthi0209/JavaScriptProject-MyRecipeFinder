@@ -67,13 +67,17 @@
   background-color: var(--main-bg-color);
 }
  #email, #password, .loginError, #signUpLink, #forgotPasswordLink, 
-#signemail, #signpassword, #loginbutton, #signbutto, #forgotemail, .showPassword, #forgotbutton, #skipLogin {
+#signemail, #signpassword, #loginbutton, #signbutto, #forgotemail,
+ .showPassword, #forgotbutton, #skipLogin, #refreshToLogin {
   align-content: center;
   text-align: center;
   width: 85%;
   height: 30px;
   margin: 5px;
   /* padding: 30px; */
+}
+.showPassword {
+  height: 100px;
 }
 #loginbutton, #signbutton {
   padding: 5px 10px;
