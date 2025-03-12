@@ -1,8 +1,11 @@
 /**
  *  Code for Cart page
  */
+
+// import the contents of importexport.js file
 import { searchBasedOnInput, populateSearchModal, populateHeaderSection, getData, allIngredientsURL, categorySearchURL, returnBackButton, returnModal, displayLoader, populateFooterSection } from "./importexport.js";
 
+// Defining a class cook so that multiple instances can be quickly added.
 class cook {
     name;
     price; 
@@ -16,18 +19,21 @@ class cook {
         this.image = image;
         this.ref = ref;
     }};
+// Instances of class cook
 var andy = new cook("andy", 69, 0, "https://cookdinehost.com/cdn/shop/files/ANDYCOOKSFRONTCOVER_Edited.jpg?v=1693440960&width=1000", "https://cookdinehost.com/products/andy-cooks-the-cookbook?utm_source=Website&utm_medium=Menu&utm_campaign=Cookbook");
 var gary = new cook("gary", 89, 0, "https://m.media-amazon.com/images/I/51e4jQDr8rL.jpg", "https://www.amazon.in/Favourites-Over-Recipes-Cook-Home/dp/1921383305");
 var roger = new cook("roger", 49, 0, "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcSfU7F05Yn0WX0LvxK8qsh2gznBJcqE_S_YKCAImU9LRloXi7v0LDmPPvZXqiY8Wv0J5PzN", "https://www.amazon.com/Use-Your-Finger-rice-cooking/dp/B08VYR29FW");
-const cooks = [andy, gary, roger];
+const cooks = [andy, gary, roger]; // putting the objects in a list in order to iterate.
 
-window.addEventListener("load", () => {
+// On window load, perform the following
+window.addEventListener("load", () => { 
     displayLoader(3000)
     populateHeaderSection();
     populateMainSection();
     populateFooterSection();
 });
 
+// function to populate the main section of page
 function populateMainSection() {
     let mainSection = document.getElementById("mainContainer");
     let searchModal = returnModal("searchModal");
@@ -82,13 +88,13 @@ function populateMainSection() {
     buyNowButtonRow.appendChild(buyNowButton);
     itemsTablehead.append(itemsTableBook, itemsTablePrice, itemsTableQuantity, itemsTableIndividualCost);
     itemsTable.appendChild(itemsTablehead);
-    cooks.forEach((cook) => {
+    cooks.forEach((cook) => { // for each cook, create a row and append it to the table.
         itemsTable.appendChild(getItemsTableRows(cook, cartTotalAmountColumn, cartTotalQuantity));
     });
 
     itemsTable.append(cartTotalAmount, buyNowButtonRow);
     mainSection.append(searchModal, sectionHeader, itemsTable);
-    buyNowButtonRow.addEventListener("click", () => {
+    buyNowButtonRow.addEventListener("click", () => { // click event listener for buy now button
         mainSection.innerHTML = ``;
         let delivery = document.createElement("div");
         delivery.id = "delivery";
@@ -101,6 +107,7 @@ function populateMainSection() {
     });
 }
 
+// function to populate/fill the table rows of the cart table.
 let getItemsTableRows = function (cook, cartTotalAmountColumn, cartTotalQuantity) {
     let itemsTableRow = document.createElement("tr");
     itemsTableRow.className = "itemsTableRow";
@@ -120,7 +127,7 @@ let getItemsTableRows = function (cook, cartTotalAmountColumn, cartTotalQuantity
     let plusButton = document.createElement("button");
     plusButton.id = `${cook['name']}` + "plus";
     plusButton.innerText = " + ";
-    plusButton.addEventListener("click", () => {
+    plusButton.addEventListener("click", () => { // when + button is pressed both table row and grand total should be updated.
         cook['userQuantity'] += 1; 
         quantityDisplay.innerHTML = `${cook['userQuantity']}`;
         itemsTableIndividualCost.innerHTML = `$${(cook['price'] * cook['userQuantity'])}`;
@@ -136,8 +143,8 @@ let getItemsTableRows = function (cook, cartTotalAmountColumn, cartTotalQuantity
     let minusButton = document.createElement("button");
     minusButton.id = `${cook['name']}` + "minus";
     minusButton.innerText = " - ";
-    minusButton.addEventListener("click", () => {
-        (cook['userQuantity'] === 0) ? 0 : (cook['userQuantity'] -= 1);
+    minusButton.addEventListener("click", () => { // when - button is pressed both table row and grand total should be updated.
+        (cook['userQuantity'] === 0) ? 0 : (cook['userQuantity'] -= 1); // if the quantity is already 0, do not decrement it.
         quantityDisplay.innerHTML = `${cook['userQuantity']}`;
         itemsTableIndividualCost.innerHTML = `$${(cook['price'] * cook['userQuantity'])}`;
         let quant = 0; let total = 0;

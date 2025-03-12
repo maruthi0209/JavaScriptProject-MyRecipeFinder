@@ -1,8 +1,9 @@
 export {getData, searchBasedOnInput, populateSearchModal, populateHeaderSection, returnModal, returnBackButton, displayLoader, populateFooterSection, allIngredientsURL, categorySearchURL}
 
-const allIngredientsURL = "https://www.themealdb.com/api/json/v1/1/list.php?i=list";
-const categorySearchURL = "https://www.themealdb.com/api/json/v1/1/filter.php?i=";
+const allIngredientsURL = "https://www.themealdb.com/api/json/v1/1/list.php?i=list"; // get all recipes based on particular ingredient.
+const categorySearchURL = "https://www.themealdb.com/api/json/v1/1/filter.php?i="; // get recipes based on particular category.
 
+// function to display loader with parameter in milliseconds.
 function displayLoader(timeInMilliseconds) {
     let quoteArrays = ['"Let food be thy medicine and medicine be thy food." - Hippocrates', 
         '"People who love to eat are always the best people." - Julia Child',
@@ -14,26 +15,28 @@ function displayLoader(timeInMilliseconds) {
     loaderScreen.id = "loaderScreen";
     let loaderAnimation = document.createElement("div");
     loaderAnimation.id = "loaderAnimation";
-    loaderAnimation.innerHTML = `<img src=${animationArrays[Math.floor(Math.random() * animationArrays.length)]} alt="Cooking Gif for you darling!">`;
+    loaderAnimation.innerHTML = `<img src=${animationArrays[Math.floor(Math.random() * animationArrays.length)]} alt="Cooking Gif for you darling!">`; // selects a random gif from the animation array
     let loaderQuote = document.createElement("div");
     loaderQuote.id = "loaderQuote";
     loaderQuote.classList.add("dancing-script-text");
-    loaderQuote.innerText = quoteArrays[Math.floor(Math.random() * quoteArrays.length)];
+    loaderQuote.innerText = quoteArrays[Math.floor(Math.random() * quoteArrays.length)]; // selects a quote from the quote array
     loaderScreen.append(loaderAnimation, loaderQuote);
-    // console.log(loaderQuote.innerText, loaderAnimation.innerHTML);
     loaderScreen.style.display = "block";
-    setTimeout(()=>{
+    setTimeout(()=>{ // display for x seconds where x is equal to parameter timeInMilliSeconds.
         loaderScreen.style.display = "none";
     }, timeInMilliseconds);
     document.body.appendChild(loaderScreen);
 }
 
+// returns a modal with id equal to its parameter name
 function returnModal(name) {
     let modalName = document.createElement("div");
     modalName.id = `${name}` + "Modal";
     modalName.style.display = "none";
     return modalName;
 }
+
+// returns a back button inside the loader.
 function returnBackButton(containerName) {
     let backButtonContainer = document.createElement("div");
     backButtonContainer.id = "backButtonCategoryContainer";
@@ -48,14 +51,10 @@ function returnBackButton(containerName) {
     return backButtonContainer;
 }
 
-
+// asynchronous function to fetch data based on given parameter url
 async function getData(URL) {
     let responseData;
     try {
-        // let response = await fetch(URL, {
-        //     method : "GET",
-        //     headers : {"content-type" : "application/json", "Access-Control-Allow-Origin": "*"}
-        // });
         let response = await fetch(URL);
         if (response.ok) { 
             responseData = await response.json();
@@ -68,21 +67,19 @@ async function getData(URL) {
     }
 }
 
-// async function searchBasedOnInput(searchBarValue) {
+// async function to search for recipes based on list of keywords entered in search input field. {
 async function searchBasedOnInput(searchList) {
-    let allIngredients = await getData(allIngredientsURL);
-    // console.log(allIngredients['meals'], searchBarValue)
+    let allIngredients = await getData(allIngredientsURL); // get all meals into an object
     var searchResults = new Array()
-    allIngredients['meals'].forEach((meal) => {
+    allIngredients['meals'].forEach((meal) => { // iterate through the list of ingredients to match the keyword
         for(let searchValue of searchList) {
-            if (meal['strIngredient'].toLowerCase().includes(searchValue)){
-                // console.log(meal['strIngredient'])
-                fetch(categorySearchURL + meal['strIngredient'])
+            if (meal['strIngredient'].toLowerCase().includes(searchValue)){ // if there is match
+                fetch(categorySearchURL + meal['strIngredient']) // get details based on id
                 .then((response) => {
                     if(response.ok) {
                         return response.json()
                     } else {
-                        throw new error("There was a problem trying to fetch the data. Please try again later.")
+                        throw new error("There was a problem trying to fetch the data. Please try again later.") /// or throw an error
                 }})
                 .then((meallist) => {
                     if (meallist['meals'] != null) {
@@ -96,9 +93,10 @@ async function searchBasedOnInput(searchList) {
         }
         
     })
-    return searchResults;
+    return searchResults; 
 }
 
+// asynchronous function populate search modal
 async function populateSearchModal(mealsList) {
     if(mealsList.length == 0) {
         let badCook = ["./fire-cooking.gif", "./bad-bad-cook.gif"]
@@ -106,15 +104,13 @@ async function populateSearchModal(mealsList) {
             "strMeal" : "Sorry! No recipes found. Try another ingredient or modify your search",
             "strMealThumb" : `${badCook[Math.floor(Math.random() * badCook.length)]}`
         }
-        mealsList.push(noMealFound)
+        mealsList.push(noMealFound) // if no recipes found, push this object into the modal.
     }
-    console.log(mealsList)
     let searchModal = document.getElementById("searchModal")
     let searchModalBackButton = returnBackButton(searchModal)
     let modalBody = document.createElement("div");
-    (mealsList[0]['strMeal'].includes("Sorry!"))? modalBody.id ="searchModalBodyEmpty" : modalBody.id = "searchModalBody";
+    (mealsList[0]['strMeal'].includes("Sorry!"))? modalBody.id ="searchModalBodyEmpty" : modalBody.id = "searchModalBody"; // assign the modal body id based on  search results.
     mealsList.forEach((meal) => {
-        // console.log(meal)
         let mealCard = document.createElement("div");
         (mealsList[0]['strMeal'].includes("Sorry!"))? mealCard.id ="mealCardEmpty" : mealCard.id = "searchMealCard";
         let mealCardImageContainer = document.createElement("div");
@@ -126,24 +122,22 @@ async function populateSearchModal(mealsList) {
         mealCardName.innerText = `${meal['strMeal']}`;
         mealCard.append(mealCardImageContainer, mealCardName);
         modalBody.appendChild(mealCard);
-
-        mealCard.addEventListener("click", async () => {
+        mealCard.addEventListener("click", async () => { // event listener for click of mealCard 
         // await getData(idURL + `${meal['idMeal']}`);
-        // console.log((await getData(idURL + `${meal['idMeal']}`))['meals']);
-        setLocalStorage((await getData(idURL + `${meal['idMeal']}`))['meals'][0], "randomData");
+        setLocalStorage((await getData(idURL + `${meal['idMeal']}`))['meals'][0], "randomData"); // set the local storage value to given recipe details.
         window.location.href = "./randomData.html";
         })
     })
     searchModal.append(searchModalBackButton, modalBody)    
 }
 
-
+// function to populate header section of the pages
 function populateHeaderSection() {
     let headerSection = document.getElementById("header");
     let logoContainer = document.createElement("div");
     logoContainer.id = "logoContainer";
     logoContainer.innerHTML = "<img src='./MyRecipeFinder.png'>"
-    logoContainer.addEventListener("click", () => {
+    logoContainer.addEventListener("click", () => { // clicking on home should redirect to home page.
         window.location.href = "./home.html";
     });
     let searchbarContainer = document.createElement("div");
@@ -160,9 +154,7 @@ function populateHeaderSection() {
     let searchButton = document.createElement("button");
     searchButton.id = "searchButton";
     searchButton.innerHTML = `<ion-icon name="search-outline"></ion-icon>`;
-    searchButton.addEventListener("click",async () => { // https://medium.com/@cgustin/tutorial-simple-search-filter-with-vanilla-javascript-fdd15b7640bf
-
-        // console.log(mealsList)
+    searchButton.addEventListener("click",async () => { // https://medium.com/@cgustin/tutorial-simple-search-filter-with-vanilla-javascript-fdd15b7640bf   // clicking on search button should trigger api call 
         let searchModal = document.getElementById("searchModal")
         searchModal.innerHTML = ``;
         searchModal.style.display = "block";
@@ -172,13 +164,12 @@ function populateHeaderSection() {
         searchLoader.style.display = "block";
         searchModal.appendChild(searchLoader);
         let searchList = []
-        searchBar.value.split(",").forEach((searchword)=>{
+        searchBar.value.split(",").forEach((searchword)=>{ // split each word from input field and perform search seperately for each
             searchList.push(searchword.trim())
         })
-        console.log(searchList)
         // let mealsList = await searchBasedOnInput(searchBar.value)
         let mealsList = await searchBasedOnInput(searchList)
-        setTimeout(() => {
+        setTimeout(() => { // display the search loader for 5 seconds before displaying search results.
             searchLoader.style.display = "none";
             populateSearchModal(mealsList)
         }, 5000)
@@ -212,10 +203,11 @@ function populateHeaderSection() {
     headerSection.append(logoContainer, navLinkCheckBox, searchCheckBox, searchbarContainer, searchCheckBoxLabel, navLinksContainer, navLinkCheckBoxLabel);
 }
 
+// function to populate the footer section 
 function populateFooterSection() {
     let footerSection = document.getElementById("footer");
     footerSection.style.display = "none";
-    setTimeout(()=> {
+    setTimeout(()=> { // display the footer after 3 seconds of loader screen.
         footerSection.style.display = "block";
     }, 3000);
     let aboutContainer = document.createElement("div");
@@ -241,6 +233,5 @@ function populateFooterSection() {
     let copyright = document.createElement("div");
     copyright.id = "copyright";
     copyright.innerHTML = ` &copy; Copyright 2025. All rights reserved.`;
-
     footerSection.append(aboutContainer, contactContainer, copyright);
 }

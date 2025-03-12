@@ -2,8 +2,10 @@
  *  Code for randomData
  */
 
+// import the contents of importexport.js file
 import { searchBasedOnInput, populateSearchModal, populateHeaderSection, getData, allIngredientsURL, categorySearchURL, returnBackButton, returnModal, displayLoader, populateFooterSection } from "./importexport.js";
 
+// On window load, perform the following
 window.addEventListener("load", () => {
     displayLoader(3000)
     populateHeaderSection();
@@ -12,18 +14,20 @@ window.addEventListener("load", () => {
      
 });  
 
+// get the recipe details from local storage
 function getLocalStorage(localStorageItem) {
     let localStorageData = JSON.parse(localStorage.getItem(localStorageItem));
     return localStorageData;
 }
 
+// function to populate the main section of the page.
 function populateMainContentSection() {
     let mainContainer = document.getElementById("mainContainerRandom")
     let randomData = getLocalStorage("randomData");
     // localStorage.removeItem("randomData");// console.log(randomData); 
     mainContainer.style.display = "none";
-    setTimeout(()=> {
-        mainContainer.style.display = "block";
+    setTimeout(()=> { // display the contents after 3 seconds of window load
+        mainContainer.style.display = "block"; 
     }, 3000);
     let searchModal = returnModal("searchModal");
     searchModal.id = "searchModal";
@@ -51,7 +55,7 @@ function populateMainContentSection() {
     randomThumb.innerHTML = `<img src="${randomData['strMealThumb']}">`;
     let randomIFrame = document.createElement("div");
     randomIFrame.id = "randomIFrame";
-    let iFrame = document.createElement("iframe");
+    let iFrame = document.createElement("iframe"); // iframe to display the associated youtube video
     iFrame.title = "randomIFrame"; // to acheive 16:9 aspect ratio, refer: https://stackoverflow.com/questions/35814653/automatic-height-when-embedding-a-youtube-video
     iFrame.src = `${randomData['strYoutube']}`.replace("watch?v=", "embed/");
     iFrame.allow = "accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture";
@@ -63,7 +67,7 @@ function populateMainContentSection() {
     randomFlex.append(randomThumb, randomDetails);
     
     mainContainer.append(searchModal, randomName, randomFlex, randomInstructions, randomIFrame);
-    if (randomData['strSource'] !== null || randomData['strSource'] !== "" || randomData['strSource'] !== " ") {
+    if (randomData['strSource'] !== null || randomData['strSource'] !== "" || randomData['strSource'] !== " ") { // if source is available only then display it.
         let randomSource = document.createElement("div");
         randomSource.id = "randomSource";
         randomSource.classList.add("dancing-script-text");
@@ -72,13 +76,13 @@ function populateMainContentSection() {
     }
 }
 
+// function to create ingredints map 
 function createIngredientsMap(randomData) {
     let ingredientsMap = new Map();
     for(let i=0; i<19; i++) {
         if (Object.values(randomData)[9+i] !== "" || Object.values(randomData)[9+i] !== null || Object.values(randomData)[9+i] !== " ") {
             ingredientsMap.set(Object.values(randomData)[9+i], Object.values(randomData)[29+i]);
         }
-    // console.log(Object.values(randomData)[9+i], Object.values(randomData)[29+i])  ;      
     }
     let randomIngredients = document.createElement("div");
     randomIngredients.id = "randomIngredients";
