@@ -1,8 +1,12 @@
 /**
  * Code for Landing page
  */
+
+// URL for glitch.com repository
 const URL = "https://pricey-atom-muskox.glitch.me/data";
-const videoMQ = window.matchMedia("(width <= 768px)");//https://stackoverflow.com/questions/44688393/detect-dynamic-media-queries-with-javascript-without-hardcoding-the-breakpoint-w
+
+// Media query for index page video display
+const videoMQ = window.matchMedia("(width <= 768px)"); //https://stackoverflow.com/questions/44688393/detect-dynamic-media-queries-with-javascript-without-hardcoding-the-breakpoint-w
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
@@ -19,24 +23,25 @@ const firebaseConfig = {
   appId: "1:513659245680:web:dc06dcfcddf6ce961890b5"
 };
 
+// import the contents of importexport.js file
 import { getAuth, createUserWithEmailAndPassword,  signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 // import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth();
 
 
-
+// On window load, perform the following
 window.addEventListener("load", async () => {
     let arrayOfUsers = await getCredentials();
     populateLogin(arrayOfUsers);
 });
 
+// function to get credentials from glitch.com repo 
 async function getCredentials() {
     let arrayOfUsers;
     try {
-        let response = await fetch(URL, {method : "GET"});
+        let response = await fetch(URL, {method : "GET"}); // url here is the glitch repo url.
         if (response.ok) {
             arrayOfUsers = await response.json(); 
             // console.log(arrayOfUsers);
@@ -49,18 +54,20 @@ async function getCredentials() {
     }
 }
 
+// function to check if the credentials are valid. Not used after firebase integration.
 function checkCredentials(arrayOfUsers) {
     let emailInput = document.getElementById("email");
     let passwordInput = document.getElementById("password");
     let isUserPresent = false;
     for(user in arrayOfUsers) {
-        if (Object.values(arrayOfUsers[user]).includes(emailInput.value) && Object.values(arrayOfUsers[user]).includes(passwordInput.value)) {
+        if (Object.values(arrayOfUsers[user]).includes(emailInput.value) && Object.values(arrayOfUsers[user]).includes(passwordInput.value)) { // check if email value and password value are matching in the array of users.
             isUserPresent = true;
         }
     };
     return isUserPresent;
 }
 
+// function to send user registered credentials to glitch repo.
 async function postCredentials(userDetails) {
     try {
         let response = await fetch(URL, {
@@ -79,18 +86,19 @@ async function postCredentials(userDetails) {
     }
 }
 
+// function to populate login. 
 function populateLogin(arrayOfUsers) {
-    let mainContainer = document.getElementById("maincontainer");
-    let videoContainer = document.createElement("div");
+    let mainContainer = document.getElementById("maincontainer"); // get main container by Id.
+    let videoContainer = document.createElement("div"); // create a div for video
     videoContainer.id = "videoContainer";
     // videoMQ.addEventListener("change", (event) => { // https://stackoverflow.com/questions/74569100/using-css-media-queries-inside-a-javascript-file
-        if(videoMQ.matches) {
+        if(videoMQ.matches) { // if the user screen width matches the condition.
             videoContainer.innerHTML = `<video autoplay loop muted width="100%"><source src="./loginvideolong.mp4" type="video/mp4"></video>`; // Video needs to muted in order for it to be autoplayed.
         } else {
             videoContainer.innerHTML = `<video autoplay loop muted width="100%"><source src="./loginvideo.mp4" type="video/mp4"></video>`; // Video needs to muted in order for it to be autoplayed.
         }
     // })
-    let divContainer = document.createElement("div");
+    let divContainer = document.createElement("div"); // create container for login, signup and forgot password.
     divContainer.id = "divContainer";
     let loginEmail = document.createElement("input");
     let loginPass = document.createElement("input");
@@ -116,7 +124,7 @@ function populateLogin(arrayOfUsers) {
     let loginError = document.createElement("div");
     loginError.className = "loginError";
     loginError.innerText = "Invalid Credentials. Please check your credentials and try again."
-    let messageContainer = document.createElement("div");
+    let messageContainer = document.createElement("div"); // creating a hidden message container for login error
     messageContainer.id = "messageContainer";
     messageContainer.className = "loader";
     messageContainer.style.display = "none";
@@ -124,15 +132,16 @@ function populateLogin(arrayOfUsers) {
     mainContainer.append(videoContainer, divContainer);
     document.body.appendChild(mainContainer);
 
+    // event listener for login button
     button.addEventListener("click", () => {
     //     if (checkCredentials(arrayOfUsers)) {
     //     window.location.href = "./home.html";
     // } else if (!checkCredentials(arrayOfUsers)) {
-        signInWithEmailAndPassword(auth, loginEmail.value, loginPass.value)
+        signInWithEmailAndPassword(auth, loginEmail.value, loginPass.value) // integrated from firebase website
             .then((userCredential) => {
                 // Signed up 
                 const user = userCredential.user;
-                console.log(email,password)
+                // console.log(email,password)
                 // messageContainer.style.display = "block";
                 // setTimeout(5000, () => {
                 //     messageContainer.style.display = "none";
@@ -152,7 +161,7 @@ function populateLogin(arrayOfUsers) {
             });
     });
 
-    skipLogin.addEventListener("click", ()=> {
+    skipLogin.addEventListener("click", ()=> { // event handler for skip login link
         window.location.href = "./home.html";
     })
 
@@ -161,8 +170,9 @@ function populateLogin(arrayOfUsers) {
     populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, forgotPasswordLink, messageContainer);
 }
 
-function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, forgotPasswordLink, messageContainer) {    
-    signUpLink.addEventListener("click", () => {
+// function to populate sign up part of div container
+function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, forgotPasswordLink, messageContainer) {   
+    signUpLink.addEventListener("click", () => { // event handler for signup link 
         divContainer.innerHTML = ''
         let signEmail = document.createElement("input");
         signEmail.id = "email";
@@ -185,41 +195,39 @@ function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, f
         let button = document.createElement("button");
         button.id = "signbutton";
         button.innerText = "Sign up!";
-        button.addEventListener("click", () => {
+        button.addEventListener("click", () => { // event handler for sign up button
             // if(checkCredentials(arrayOfUsers)) {
             //     text.innerText = "Looks like you're already a member. Refresh the page to login or if you don't remember it, click the forgot password link below."
             // } else {
-                createUserWithEmailAndPassword(auth, signEmail.value, signPass.value)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    if(postCredentials(Object({"username" : `${signEmail.value}`, "password" : `${signPass.value}`}))) {
-                    text.innerText = "We got your credentials. You can refresh the page to login.";
-    } else {
-                    text.innerText = "Uh-oh! we are unable to save your credentials due to a technical issue. Try again after some time.";
-    }
-    messageContainer.style.display = "block";
-                setTimeout(() => {
-                    messageContainer.style.display = "none"
-                }, 2000)
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    // ..
-  });
+            createUserWithEmailAndPassword(auth, signEmail.value, signPass.value) // function name is integrated from firebase
+                .then((userCredential) => {
+                    const user = userCredential.user; // get user details from credentials entered.
+                    if(postCredentials(Object({"username" : `${signEmail.value}`, "password" : `${signPass.value}`}))) { // if able to save the credentials
+                                    text.innerText = "We got your credentials. You can refresh the page to login."; // display when save successful
+                    } else {
+                                    text.innerText = "Uh-oh! we are unable to save your credentials due to a technical issue. Try again after some time."; // display when save not successful
+                    }
+                    messageContainer.style.display = "block"; // display the message container for 2 seconds
+                    setTimeout(() => {
+                        messageContainer.style.display = "none" // hide the message container after 2 seconds
+                    }, 2000)
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    // ..
+                });
         })
-        signEmail.addEventListener("input", () => {
-            if (!signEmail.value.match(/^[a-zA-Z]+$/)) {
+        signEmail.addEventListener("input", () => { // event listener for entered sign up email
+            if (!signEmail.value.match(/^[a-zA-Z]+$/)) { // username should contain small and capital letters
             // if(regSmall.test(signEmail.value) && regBig.test(signEmail.value) && regInt.test(signEmail.value)) {
                 emailError.style.display = "none";
             } else {
                 emailError.style.display = "block";
             }
-        })
-        signPass.addEventListener("input", () => {
-            if (signPass.value.match(/^[a-zA-Z0-9!@#]{8,}$/)) {
+        }) 
+        signPass.addEventListener("input", () => { // event listener for entered password
+            if (signPass.value.match(/^[a-zA-Z0-9!@#]{8,}$/)) { // password should contain one small, one cap and one integer with a special character.
                 // if(regSmall.test(signEmail.value) && regBig.test(signEmail.value) && regInt.test(signEmail.value)) {
                     passError.style.display = "none";
                 } else {
@@ -233,8 +241,9 @@ function populateSignUp(mainContainer, divContainer, signUpLink, arrayOfUsers, f
     
 }
 
+// function to populate forgot password section
 function populateForgotPassword(mainContainer, divContainer, forgotPasswordLink, arrayOfUsers, signUpLink) {
-    forgotPasswordLink.addEventListener("click", () => {
+    forgotPasswordLink.addEventListener("click", () => { // event handler for forgot password link
         divContainer.innerHTML = ''
         let loginEmail = document.createElement("input");
         loginEmail.id = "email";
@@ -251,8 +260,7 @@ function populateForgotPassword(mainContainer, divContainer, forgotPasswordLink,
         button.innerText = "Show me !";
         divContainer.append(loginEmail, button, passwordText, signUpLink);
         mainContainer.appendChild(divContainer);
-        button.addEventListener("click", () => {
-            // console.log(arrayOfUsers)
+        button.addEventListener("click", () => { // event handler for show password button.
             for(let user of arrayOfUsers) {
                 // console.log(user['username'] == loginEmail.value);
                 // if(Object.values(arrayOfUsers[user]).includes(loginEmail.value)) {
@@ -265,7 +273,7 @@ function populateForgotPassword(mainContainer, divContainer, forgotPasswordLink,
                     signUpLink.style.display = "block";
                 }
                 }
-            setTimeout(() => {
+            setTimeout(() => { // hide the password after 5 seconds
                 loginEmail.value = '';
                 secretPass.style.display = "none";
             }, 5000);       
