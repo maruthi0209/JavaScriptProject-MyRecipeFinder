@@ -262,6 +262,9 @@ body {
   border : 1px solid var(--font-text-color);
   cursor: pointer;
 }
+#forgotPasswordLink, #skipLogin, #signUpLink, #loginbutton {
+  cursor: pointer;
+}
 .categoryCard img {
   display: block;
   width: 100%;
