@@ -257,7 +257,7 @@ body {
   min-width: 150px;
   padding: 10px;
 }
-.categoryCard:hover, .ingredientCard:hover, #randomImgContainer:hover,
+.categoryCard:hover, .ingredientCard:hover, #randomImgContainer:hover, #mealCardImageContainer,
 .alphabetCard:hover, .areaCard:hover, .strCategoryRecipes:hover, #alphabetCard:hover, #mealsCard:hover  {
   border : 1px solid var(--font-text-color);
   cursor: pointer;
