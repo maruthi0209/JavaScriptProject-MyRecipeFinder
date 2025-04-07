@@ -2,6 +2,7 @@ export {getData, searchBasedOnInput, populateSearchModal, populateHeaderSection,
 
 const allIngredientsURL = "https://www.themealdb.com/api/json/v1/1/list.php?i=list"; // get all recipes based on particular ingredient.
 const categorySearchURL = "https://www.themealdb.com/api/json/v1/1/filter.php?i="; // get recipes based on particular category.
+const idURL = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=";
 
 // function to display loader with parameter in milliseconds.
 function displayLoader(timeInMilliseconds) {
@@ -26,6 +27,15 @@ function displayLoader(timeInMilliseconds) {
         loaderScreen.style.display = "none";
     }, timeInMilliseconds);
     document.body.appendChild(loaderScreen);
+}
+
+// sets the local storage
+function setLocalStorage(localStorageData, localStorageItem) {
+    try {
+        localStorage.setItem(localStorageItem, JSON.stringify(localStorageData));
+    } catch(error) {
+        console.error(error);
+    }
 }
 
 // returns a modal with id equal to its parameter name
@@ -84,7 +94,7 @@ async function searchBasedOnInput(searchList) {
                 .then((meallist) => {
                     if (meallist['meals'] != null) {
                     // if (meallist['meals'].length != 0) {
-                        console.log(meallist['meals'])
+                        // console.log(meallist['meals'])
                     meallist['meals'].forEach((meal) => {
                         searchResults.push(meal)
                     }) } 
